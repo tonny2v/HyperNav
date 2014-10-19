@@ -8,10 +8,38 @@
 
 /* Begin PBXBuildFile section */
 		E1E35A8319D476C4002C1564 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8219D476C4002C1564 /* main.cpp */; };
+		E1E35AA119D476F7002C1564 /* algorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8919D476F7002C1564 /* algorithm.cpp */; };
+		E1E35AA219D476F7002C1564 /* dijkstra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8C19D476F7002C1564 /* dijkstra.cpp */; };
+		E1E35AA319D476F7002C1564 /* fibheap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8E19D476F7002C1564 /* fibheap.cpp */; };
+		E1E35AA419D476F7002C1564 /* hyperpath_gev.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9419D476F7002C1564 /* hyperpath_gev.cpp */; };
+		E1E35AA519D476F7002C1564 /* hyperpath_sl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9619D476F7002C1564 /* hyperpath_sl.cpp */; };
+		E1E35AA619D476F7002C1564 /* hyperpath_td.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9819D476F7002C1564 /* hyperpath_td.cpp */; };
+		E1E35AA719D476F7002C1564 /* hyperpath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9A19D476F7002C1564 /* hyperpath.cpp */; };
+		E1E35AA819D476F7002C1564 /* radixheap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9D19D476F7002C1564 /* radixheap.cpp */; };
+		E1E35AA919D476F7002C1564 /* wrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35AA019D476F7002C1564 /* wrapper.cpp */; };
+		E1E35AB419D57BA5002C1564 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8219D476C4002C1564 /* main.cpp */; };
+		E1E35AB519D57BA5002C1564 /* dijkstra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8C19D476F7002C1564 /* dijkstra.cpp */; };
+		E1E35AB619D57BA5002C1564 /* hyperpath_sl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9619D476F7002C1564 /* hyperpath_sl.cpp */; };
+		E1E35AB719D57BA5002C1564 /* hyperpath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9A19D476F7002C1564 /* hyperpath.cpp */; };
+		E1E35AB819D57BA5002C1564 /* radixheap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9D19D476F7002C1564 /* radixheap.cpp */; };
+		E1E35AB919D57BA5002C1564 /* algorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8919D476F7002C1564 /* algorithm.cpp */; };
+		E1E35ABA19D57BA5002C1564 /* fibheap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8E19D476F7002C1564 /* fibheap.cpp */; };
+		E1E35ABB19D57BA5002C1564 /* hyperpath_gev.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9419D476F7002C1564 /* hyperpath_gev.cpp */; };
+		E1E35ABC19D57BA5002C1564 /* hyperpath_td.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9819D476F7002C1564 /* hyperpath_td.cpp */; };
+		E1E35ABD19D57BA5002C1564 /* wrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35AA019D476F7002C1564 /* wrapper.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		E1E35A7D19D476C4002C1564 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		E1E35ABF19D57BA5002C1564 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -25,10 +53,42 @@
 /* Begin PBXFileReference section */
 		E1E35A7F19D476C4002C1564 /* hyperpath_td */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = hyperpath_td; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1E35A8219D476C4002C1564 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		E1E35A8919D476F7002C1564 /* algorithm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = algorithm.cpp; sourceTree = "<group>"; };
+		E1E35A8A19D476F7002C1564 /* algorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = algorithm.h; sourceTree = "<group>"; };
+		E1E35A8B19D476F7002C1564 /* csvhelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = csvhelper.hpp; sourceTree = "<group>"; };
+		E1E35A8C19D476F7002C1564 /* dijkstra.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dijkstra.cpp; sourceTree = "<group>"; };
+		E1E35A8D19D476F7002C1564 /* dijkstra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dijkstra.h; sourceTree = "<group>"; };
+		E1E35A8E19D476F7002C1564 /* fibheap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fibheap.cpp; sourceTree = "<group>"; };
+		E1E35A8F19D476F7002C1564 /* fibheap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fibheap.h; sourceTree = "<group>"; };
+		E1E35A9019D476F7002C1564 /* graph.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = graph.hpp; sourceTree = "<group>"; };
+		E1E35A9119D476F7002C1564 /* graphbuilder.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = graphbuilder.hpp; sourceTree = "<group>"; };
+		E1E35A9219D476F7002C1564 /* graphhelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = graphhelper.hpp; sourceTree = "<group>"; };
+		E1E35A9319D476F7002C1564 /* heap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = heap.h; sourceTree = "<group>"; };
+		E1E35A9419D476F7002C1564 /* hyperpath_gev.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hyperpath_gev.cpp; sourceTree = "<group>"; };
+		E1E35A9519D476F7002C1564 /* hyperpath_gev.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hyperpath_gev.h; sourceTree = "<group>"; };
+		E1E35A9619D476F7002C1564 /* hyperpath_sl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hyperpath_sl.cpp; sourceTree = "<group>"; };
+		E1E35A9719D476F7002C1564 /* hyperpath_sl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hyperpath_sl.h; sourceTree = "<group>"; };
+		E1E35A9819D476F7002C1564 /* hyperpath_td.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hyperpath_td.cpp; sourceTree = "<group>"; };
+		E1E35A9919D476F7002C1564 /* hyperpath_td.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hyperpath_td.h; sourceTree = "<group>"; };
+		E1E35A9A19D476F7002C1564 /* hyperpath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hyperpath.cpp; sourceTree = "<group>"; };
+		E1E35A9B19D476F7002C1564 /* hyperpath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hyperpath.h; sourceTree = "<group>"; };
+		E1E35A9C19D476F7002C1564 /* PREDEFINE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PREDEFINE.h; sourceTree = "<group>"; };
+		E1E35A9D19D476F7002C1564 /* radixheap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = radixheap.cpp; sourceTree = "<group>"; };
+		E1E35A9E19D476F7002C1564 /* radixheap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = radixheap.h; sourceTree = "<group>"; };
+		E1E35A9F19D476F7002C1564 /* drmhelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = drmhelper.hpp; sourceTree = "<group>"; };
+		E1E35AA019D476F7002C1564 /* wrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wrapper.cpp; sourceTree = "<group>"; };
+		E1E35AC319D57BA5002C1564 /* mygraph.so */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = mygraph.so; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		E1E35A7C19D476C4002C1564 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1E35ABE19D57BA5002C1564 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -50,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				E1E35A7F19D476C4002C1564 /* hyperpath_td */,
+				E1E35AC319D57BA5002C1564 /* mygraph.so */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -57,6 +118,30 @@
 		E1E35A8119D476C4002C1564 /* hyperpath_td */ = {
 			isa = PBXGroup;
 			children = (
+				E1E35A8919D476F7002C1564 /* algorithm.cpp */,
+				E1E35A8A19D476F7002C1564 /* algorithm.h */,
+				E1E35A8B19D476F7002C1564 /* csvhelper.hpp */,
+				E1E35A8C19D476F7002C1564 /* dijkstra.cpp */,
+				E1E35A8D19D476F7002C1564 /* dijkstra.h */,
+				E1E35A8E19D476F7002C1564 /* fibheap.cpp */,
+				E1E35A8F19D476F7002C1564 /* fibheap.h */,
+				E1E35A9019D476F7002C1564 /* graph.hpp */,
+				E1E35A9119D476F7002C1564 /* graphbuilder.hpp */,
+				E1E35A9219D476F7002C1564 /* graphhelper.hpp */,
+				E1E35A9319D476F7002C1564 /* heap.h */,
+				E1E35A9419D476F7002C1564 /* hyperpath_gev.cpp */,
+				E1E35A9519D476F7002C1564 /* hyperpath_gev.h */,
+				E1E35A9619D476F7002C1564 /* hyperpath_sl.cpp */,
+				E1E35A9719D476F7002C1564 /* hyperpath_sl.h */,
+				E1E35A9819D476F7002C1564 /* hyperpath_td.cpp */,
+				E1E35A9919D476F7002C1564 /* hyperpath_td.h */,
+				E1E35A9A19D476F7002C1564 /* hyperpath.cpp */,
+				E1E35A9B19D476F7002C1564 /* hyperpath.h */,
+				E1E35A9C19D476F7002C1564 /* PREDEFINE.h */,
+				E1E35A9D19D476F7002C1564 /* radixheap.cpp */,
+				E1E35A9E19D476F7002C1564 /* radixheap.h */,
+				E1E35A9F19D476F7002C1564 /* drmhelper.hpp */,
+				E1E35AA019D476F7002C1564 /* wrapper.cpp */,
 				E1E35A8219D476C4002C1564 /* main.cpp */,
 			);
 			path = hyperpath_td;
@@ -80,6 +165,23 @@
 			name = hyperpath_td;
 			productName = hyperpath_td;
 			productReference = E1E35A7F19D476C4002C1564 /* hyperpath_td */;
+			productType = "com.apple.product-type.tool";
+		};
+		E1E35AB219D57BA5002C1564 /* libmygraph */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1E35AC019D57BA5002C1564 /* Build configuration list for PBXNativeTarget "libmygraph" */;
+			buildPhases = (
+				E1E35AB319D57BA5002C1564 /* Sources */,
+				E1E35ABE19D57BA5002C1564 /* Frameworks */,
+				E1E35ABF19D57BA5002C1564 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libmygraph;
+			productName = hyperpath_td;
+			productReference = E1E35AC319D57BA5002C1564 /* mygraph.so */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -109,6 +211,7 @@
 			projectRoot = "";
 			targets = (
 				E1E35A7E19D476C4002C1564 /* hyperpath_td */,
+				E1E35AB219D57BA5002C1564 /* libmygraph */,
 			);
 		};
 /* End PBXProject section */
@@ -119,6 +222,32 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1E35A8319D476C4002C1564 /* main.cpp in Sources */,
+				E1E35AA219D476F7002C1564 /* dijkstra.cpp in Sources */,
+				E1E35AA519D476F7002C1564 /* hyperpath_sl.cpp in Sources */,
+				E1E35AA719D476F7002C1564 /* hyperpath.cpp in Sources */,
+				E1E35AA819D476F7002C1564 /* radixheap.cpp in Sources */,
+				E1E35AA119D476F7002C1564 /* algorithm.cpp in Sources */,
+				E1E35AA319D476F7002C1564 /* fibheap.cpp in Sources */,
+				E1E35AA419D476F7002C1564 /* hyperpath_gev.cpp in Sources */,
+				E1E35AA619D476F7002C1564 /* hyperpath_td.cpp in Sources */,
+				E1E35AA919D476F7002C1564 /* wrapper.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1E35AB319D57BA5002C1564 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1E35AB419D57BA5002C1564 /* main.cpp in Sources */,
+				E1E35AB519D57BA5002C1564 /* dijkstra.cpp in Sources */,
+				E1E35AB619D57BA5002C1564 /* hyperpath_sl.cpp in Sources */,
+				E1E35AB719D57BA5002C1564 /* hyperpath.cpp in Sources */,
+				E1E35AB819D57BA5002C1564 /* radixheap.cpp in Sources */,
+				E1E35AB919D57BA5002C1564 /* algorithm.cpp in Sources */,
+				E1E35ABA19D57BA5002C1564 /* fibheap.cpp in Sources */,
+				E1E35ABB19D57BA5002C1564 /* hyperpath_gev.cpp in Sources */,
+				E1E35ABC19D57BA5002C1564 /* hyperpath_td.cpp in Sources */,
+				E1E35ABD19D57BA5002C1564 /* wrapper.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,6 +331,33 @@
 		E1E35A8719D476C4002C1564 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/hyperpath_td",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/opt/local/include,
+					/opt/local/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7,
+				);
+				LD_DYLIB_INSTALL_NAME = "";
+				LIBRARY_SEARCH_PATHS = (
+					/opt/local/lib,
+					"$(PROJECT_DIR)/hyperpath_td",
+				);
+				MACH_O_TYPE = mh_execute;
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LDFLAGS = (
+					"-lhdf5_hl",
+					"-lhdf5",
+					"-lpqxx",
+					"-lboost_python-mt",
+					"-lboost_thread-mt",
+					"-lboost_system-mt",
+					"-lpython2.7",
+					"-lboost_unit_test_framework-mt",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -209,7 +365,88 @@
 		E1E35A8819D476C4002C1564 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/hyperpath_td",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/opt/local/include,
+					/opt/local/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7,
+				);
+				LD_DYLIB_INSTALL_NAME = "";
+				LIBRARY_SEARCH_PATHS = (
+					/opt/local/lib,
+					"$(PROJECT_DIR)/hyperpath_td",
+				);
+				MACH_O_TYPE = mh_execute;
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LDFLAGS = (
+					"-lhdf5_hl",
+					"-lhdf5",
+					"-lpqxx",
+					"-lboost_python-mt",
+					"-lboost_thread-mt",
+					"-lboost_system-mt",
+					"-lpython2.7",
+					"-lboost_unit_test_framework-mt",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		E1E35AC119D57BA5002C1564 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/opt/local/include,
+					/opt/local/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7,
+				);
+				LD_DYLIB_INSTALL_NAME = "";
+				LIBRARY_SEARCH_PATHS = /opt/local/lib;
+				MACH_O_TYPE = mh_dylib;
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LDFLAGS = (
+					"-lhdf5_hl",
+					"-lhdf5",
+					"-lpqxx",
+					"-lboost_python-mt",
+					"-lboost_thread-mt",
+					"-lboost_system-mt",
+					"-lboost_unit_test_framework-mt",
+					"-lpython2.7",
+				);
+				PRODUCT_NAME = mygraph.so;
+			};
+			name = Debug;
+		};
+		E1E35AC219D57BA5002C1564 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/opt/local/include,
+					/opt/local/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7,
+				);
+				LD_DYLIB_INSTALL_NAME = "";
+				LIBRARY_SEARCH_PATHS = /opt/local/lib;
+				MACH_O_TYPE = mh_dylib;
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LDFLAGS = (
+					"-lhdf5_hl",
+					"-lhdf5",
+					"-lpqxx",
+					"-lboost_python-mt",
+					"-lboost_thread-mt",
+					"-lboost_system-mt",
+					"-lboost_unit_test_framework-mt",
+					"-lpython2.7",
+				);
+				PRODUCT_NAME = mygraph.so;
 			};
 			name = Release;
 		};
@@ -232,6 +469,16 @@
 				E1E35A8819D476C4002C1564 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E1E35AC019D57BA5002C1564 /* Build configuration list for PBXNativeTarget "libmygraph" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1E35AC119D57BA5002C1564 /* Debug */,
+				E1E35AC219D57BA5002C1564 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

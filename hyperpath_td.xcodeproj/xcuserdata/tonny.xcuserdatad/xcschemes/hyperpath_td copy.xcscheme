@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E1E35A7E19D476C4002C1564"
-               BuildableName = "hyperpath_td"
-               BlueprintName = "hyperpath_td"
+               BlueprintIdentifier = "E1E35AB219D57BA5002C1564"
+               BuildableName = "mygraph.so"
+               BlueprintName = "libmygraph"
                ReferencedContainer = "container:hyperpath_td.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E1E35A7E19D476C4002C1564"
-            BuildableName = "hyperpath_td"
-            BlueprintName = "hyperpath_td"
+            BlueprintIdentifier = "E1E35AB219D57BA5002C1564"
+            BuildableName = "mygraph.so"
+            BlueprintName = "libmygraph"
             ReferencedContainer = "container:hyperpath_td.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -51,9 +51,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E1E35A7E19D476C4002C1564"
-            BuildableName = "hyperpath_td"
-            BlueprintName = "hyperpath_td"
+            BlueprintIdentifier = "E1E35AB219D57BA5002C1564"
+            BuildableName = "mygraph.so"
+            BlueprintName = "libmygraph"
             ReferencedContainer = "container:hyperpath_td.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -69,9 +69,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E1E35A7E19D476C4002C1564"
-            BuildableName = "hyperpath_td"
-            BlueprintName = "hyperpath_td"
+            BlueprintIdentifier = "E1E35AB219D57BA5002C1564"
+            BuildableName = "mygraph.so"
+            BlueprintName = "libmygraph"
             ReferencedContainer = "container:hyperpath_td.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -81,6 +81,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
+      customArchiveName = "libmygraph"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

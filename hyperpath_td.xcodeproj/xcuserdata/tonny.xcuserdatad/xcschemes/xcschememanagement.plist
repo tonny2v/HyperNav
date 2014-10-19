@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>hyperpath_td copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>hyperpath_td.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -13,6 +18,16 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>E1E35A7E19D476C4002C1564</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E1E35AAD19D57994002C1564</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E1E35AB219D57BA5002C1564</key>
 		<dict>
 			<key>primary</key>
 			<true/>
