@@ -7,7 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E1E35A8319D476C4002C1564 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8219D476C4002C1564 /* main.cpp */; };
+		E1DB12F719F3E63400D0BED8 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DB12F419F3E63400D0BED8 /* gtest.framework */; };
+		E1DB12F819F3E63400D0BED8 /* libgtest_main.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DB12F519F3E63400D0BED8 /* libgtest_main.a */; };
+		E1DB12F919F3E63400D0BED8 /* libgtest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DB12F619F3E63400D0BED8 /* libgtest.a */; };
+		E1DB12FA19F404C200D0BED8 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DB12F419F3E63400D0BED8 /* gtest.framework */; };
+		E1DB12FB19F404C200D0BED8 /* libgtest_main.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DB12F519F3E63400D0BED8 /* libgtest_main.a */; };
+		E1DB12FC19F404C200D0BED8 /* libgtest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DB12F619F3E63400D0BED8 /* libgtest.a */; };
+		E1E35A8319D476C4002C1564 /* unittests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8219D476C4002C1564 /* unittests.cpp */; };
 		E1E35AA119D476F7002C1564 /* algorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8919D476F7002C1564 /* algorithm.cpp */; };
 		E1E35AA219D476F7002C1564 /* dijkstra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8C19D476F7002C1564 /* dijkstra.cpp */; };
 		E1E35AA319D476F7002C1564 /* fibheap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8E19D476F7002C1564 /* fibheap.cpp */; };
@@ -17,7 +23,7 @@
 		E1E35AA719D476F7002C1564 /* hyperpath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9A19D476F7002C1564 /* hyperpath.cpp */; };
 		E1E35AA819D476F7002C1564 /* radixheap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9D19D476F7002C1564 /* radixheap.cpp */; };
 		E1E35AA919D476F7002C1564 /* wrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35AA019D476F7002C1564 /* wrapper.cpp */; };
-		E1E35AB419D57BA5002C1564 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8219D476C4002C1564 /* main.cpp */; };
+		E1E35AB419D57BA5002C1564 /* unittests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8219D476C4002C1564 /* unittests.cpp */; };
 		E1E35AB519D57BA5002C1564 /* dijkstra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8C19D476F7002C1564 /* dijkstra.cpp */; };
 		E1E35AB619D57BA5002C1564 /* hyperpath_sl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9619D476F7002C1564 /* hyperpath_sl.cpp */; };
 		E1E35AB719D57BA5002C1564 /* hyperpath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9A19D476F7002C1564 /* hyperpath.cpp */; };
@@ -51,8 +57,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E1DB12F419F3E63400D0BED8 /* gtest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtest.framework; path = lib/gtest.framework; sourceTree = "<group>"; };
+		E1DB12F519F3E63400D0BED8 /* libgtest_main.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgtest_main.a; path = lib/libgtest_main.a; sourceTree = "<group>"; };
+		E1DB12F619F3E63400D0BED8 /* libgtest.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgtest.a; path = lib/libgtest.a; sourceTree = "<group>"; };
 		E1E35A7F19D476C4002C1564 /* hyperpath_td */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = hyperpath_td; sourceTree = BUILT_PRODUCTS_DIR; };
-		E1E35A8219D476C4002C1564 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		E1E35A8219D476C4002C1564 /* unittests.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = unittests.cpp; sourceTree = "<group>"; };
 		E1E35A8919D476F7002C1564 /* algorithm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = algorithm.cpp; sourceTree = "<group>"; };
 		E1E35A8A19D476F7002C1564 /* algorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = algorithm.h; sourceTree = "<group>"; };
 		E1E35A8B19D476F7002C1564 /* csvhelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = csvhelper.hpp; sourceTree = "<group>"; };
@@ -85,6 +94,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1DB12F719F3E63400D0BED8 /* gtest.framework in Frameworks */,
+				E1DB12F819F3E63400D0BED8 /* libgtest_main.a in Frameworks */,
+				E1DB12F919F3E63400D0BED8 /* libgtest.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +104,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1DB12FA19F404C200D0BED8 /* gtest.framework in Frameworks */,
+				E1DB12FB19F404C200D0BED8 /* libgtest_main.a in Frameworks */,
+				E1DB12FC19F404C200D0BED8 /* libgtest.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +116,9 @@
 		E1E35A7619D476C4002C1564 = {
 			isa = PBXGroup;
 			children = (
+				E1DB12F419F3E63400D0BED8 /* gtest.framework */,
+				E1DB12F519F3E63400D0BED8 /* libgtest_main.a */,
+				E1DB12F619F3E63400D0BED8 /* libgtest.a */,
 				E1E35A8119D476C4002C1564 /* hyperpath_td */,
 				E1E35A8019D476C4002C1564 /* Products */,
 			);
@@ -142,7 +160,7 @@
 				E1E35A9E19D476F7002C1564 /* radixheap.h */,
 				E1E35A9F19D476F7002C1564 /* drmhelper.hpp */,
 				E1E35AA019D476F7002C1564 /* wrapper.cpp */,
-				E1E35A8219D476C4002C1564 /* main.cpp */,
+				E1E35A8219D476C4002C1564 /* unittests.cpp */,
 			);
 			path = hyperpath_td;
 			sourceTree = "<group>";
@@ -221,7 +239,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1E35A8319D476C4002C1564 /* main.cpp in Sources */,
+				E1E35A8319D476C4002C1564 /* unittests.cpp in Sources */,
 				E1E35AA219D476F7002C1564 /* dijkstra.cpp in Sources */,
 				E1E35AA519D476F7002C1564 /* hyperpath_sl.cpp in Sources */,
 				E1E35AA719D476F7002C1564 /* hyperpath.cpp in Sources */,
@@ -238,7 +256,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1E35AB419D57BA5002C1564 /* main.cpp in Sources */,
+				E1E35AB419D57BA5002C1564 /* unittests.cpp in Sources */,
 				E1E35AB519D57BA5002C1564 /* dijkstra.cpp in Sources */,
 				E1E35AB619D57BA5002C1564 /* hyperpath_sl.cpp in Sources */,
 				E1E35AB719D57BA5002C1564 /* hyperpath.cpp in Sources */,
@@ -287,7 +305,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -322,7 +340,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
@@ -334,6 +352,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/hyperpath_td",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/lib",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -345,6 +366,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					/opt/local/lib,
 					"$(PROJECT_DIR)/hyperpath_td",
+					"$(PROJECT_DIR)/lib",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks/gtest.framework/Versions/A/Resources",
 				);
 				MACH_O_TYPE = mh_execute;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
@@ -357,6 +380,7 @@
 					"-lboost_system-mt",
 					"-lpython2.7",
 					"-lboost_unit_test_framework-mt",
+					"-lpthread",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -368,6 +392,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/hyperpath_td",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/lib",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -379,6 +406,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					/opt/local/lib,
 					"$(PROJECT_DIR)/hyperpath_td",
+					"$(PROJECT_DIR)/lib",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks/gtest.framework/Versions/A/Resources",
 				);
 				MACH_O_TYPE = mh_execute;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
@@ -391,6 +420,7 @@
 					"-lboost_system-mt",
 					"-lpython2.7",
 					"-lboost_unit_test_framework-mt",
+					"-lpthread",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -399,6 +429,10 @@
 		E1E35AC119D57BA5002C1564 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/lib",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -406,7 +440,10 @@
 					/opt/local/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7,
 				);
 				LD_DYLIB_INSTALL_NAME = "";
-				LIBRARY_SEARCH_PATHS = /opt/local/lib;
+				LIBRARY_SEARCH_PATHS = (
+					/opt/local/lib,
+					"$(PROJECT_DIR)/lib",
+				);
 				MACH_O_TYPE = mh_dylib;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = (
@@ -426,6 +463,10 @@
 		E1E35AC219D57BA5002C1564 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/lib",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -433,7 +474,10 @@
 					/opt/local/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7,
 				);
 				LD_DYLIB_INSTALL_NAME = "";
-				LIBRARY_SEARCH_PATHS = /opt/local/lib;
+				LIBRARY_SEARCH_PATHS = (
+					/opt/local/lib,
+					"$(PROJECT_DIR)/lib",
+				);
 				MACH_O_TYPE = mh_dylib;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = (

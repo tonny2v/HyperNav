@@ -37,20 +37,26 @@ private:
     
 public:
     
-    Drmhelper(const string &hdf5_path, const string &dataset_name) {
+    Drmhelper() {
         drm_graph = nullptr;
         conn = new pqxx::connection(CONNECTION);
-        file_id = H5Fopen(hdf5_path.c_str(), H5F_ACC_RDONLY, H5P_DEFAULT);
-        dataset = H5Dopen(file_id, dataset_name.c_str(), H5P_DEFAULT);
-        
     }
     
     ~Drmhelper() {
-        H5Fclose(file_id);
-        H5Dclose(dataset);
         delete conn;
     }
     
+    void open_hdf(const string &hdf5_path, const string &dataset_name)
+    {
+        file_id = H5Fopen(hdf5_path.c_str(), H5F_ACC_RDONLY, H5P_DEFAULT);
+        dataset = H5Dopen(file_id, dataset_name.c_str(), H5P_DEFAULT);
+    }
+    
+    void close_hdf()
+    {
+        H5Fclose(file_id);
+        H5Dclose(dataset);
+    }
     
     struct Coordinate {float lon; float lat;};
     string get_nearest_nodecode(const Coordinate& lonlat, const string& nodestable)
@@ -63,7 +69,8 @@ public:
         // be care of CRS
         try {
             pqxx::work x(*conn);
-            string query = " SELECT  St_AsText(geom), St_X(St_Transform(geom, 4326)), St_Y(St_Transform(geom, 4326)) FROM"
+            auto query =
+            " SELECT  St_AsText(geom), St_X(St_Transform(geom, 4326)), St_Y(St_Transform(geom, 4326)) FROM"
             " (SELECT geom FROM " + nodestable + " ORDER BY ST_Distance(ST_GeomFromText('POINT("+
             to_string(lon) + " " + to_string(lat) + ")',4301) , geom) LIMIT 1 ) AS t;";
             
@@ -120,8 +127,62 @@ public:
         }
         return boost::python::make_tuple(nodecode, boost::python::make_tuple(lon_new, lat_new));
     }
-    
+   
     const boost::shared_ptr<Graph> make_graph(const string& links_view, int n, int m)
+    {
+        if(! conn->is_open()) conn->activate();
+        
+        pqxx::work x(*conn);
+        
+        boost::shared_ptr<Graph> g (boost::make_shared<Graph>(n, m));
+        
+        string query = " SELECT linkcode, h5key, basic_length AS length, ffspeed,"
+        " ST_AsText(ST_StartPoint(geom)) AS fnode,"
+        " ST_AsText(ST_EndPoint(geom))  AS tnode,"
+        " ST_AsGeojson(ST_Transform(geom, 4326)) AS geojson"
+        " FROM " + links_view + ";";
+        
+        try{
+            // TODO: this can be changed to the links inside the rectangle only
+            r = x.exec(query);
+            for (const auto &row : r)
+            {
+                string linkcode = row[0].c_str();
+                h5key_map[linkcode] = atoi(row[1].c_str());
+                length_map[linkcode] =  atof(row[2].c_str());
+                ffspeed_map[linkcode] = atof(row[3].c_str());
+                g->add_edge(linkcode, row[4].c_str(), row[5].c_str());
+                geojson_map[linkcode] = row[6].c_str();
+            }
+            
+        } catch (std::exception &e) {
+            cout << e.what() << endl;
+        }
+        
+        // connect mesh border nodes
+        //        query = "SELECT nodecode AS fnode, connect_meshcode ||'-'|| connect_nodecode AS tnode FROM nodes WHERE connect_meshcode!='000000'";
+        //
+        //        try{
+        //            r = x.exec(query);
+        //            for (const auto &row : r)
+        //            {
+        //                string linkcode = "border" + row["fnode"].as<string>() +" "+ row["tnode"].as<string>();
+        //                g->add_edge(linkcode, row["fnode"].as<string>(), row["tnode"].as<string>());
+        //            }
+        //            
+        //        } catch (std::exception &e) {
+        //            cout << e.what() << endl;
+        //        }
+        
+        drm_graph = g;
+        if (drm_graph == nullptr)
+            throw "ERROR: graph not yet set";
+        
+        return drm_graph;
+    }
+    
+    const boost::shared_ptr<Graph> make_graph2(const string& links_view, int n, int m,
+                                              int length_lowerlimit = numeric_limits<int>::infinity(), int count_upperlimit = 0)
     {
         if(! conn->is_open()) conn->activate();
         
@@ -166,7 +227,8 @@ public:
         string query = " SELECT linkcode, h5key, basic_length AS length, ffspeed,"
         " ST_AsText(ST_StartPoint(geom)) AS fnode,"
         " ST_AsText(ST_EndPoint(geom))  AS tnode,"
-        " ST_AsGeojson(ST_Transform(geom, 4326)) AS geojson"
+        " ST_AsGeojson(ST_Transform(geom, 4326)) AS geojson,"
+        " count "
         " FROM " + links_view + ";";
 
         
@@ -177,7 +239,8 @@ public:
             {
                 string linkcode = row[0].c_str();
                 h5key_map[linkcode] = atoi(row[1].c_str());
-                length_map[linkcode] = atof(row[2].c_str());
+                bool condition = atoi(row[2].c_str()) > length_lowerlimit && atoi(row[7].c_str()) < count_upperlimit;
+                length_map[linkcode] =  (condition) ? numeric_limits<float>::infinity(): atof(row[2].c_str());
                 ffspeed_map[linkcode] = atof(row[3].c_str());
                 g->add_edge(linkcode, row[4].c_str(), row[5].c_str());
                 geojson_map[linkcode] = row[6].c_str();

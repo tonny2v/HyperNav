@@ -61,6 +61,9 @@ private:
     vector<string> path_rec;
     // get a random path recommendation
     
+    float* weights_min;
+    float* weights_max;
+    
 public:
     
     Hyperpath_TD(Graph* const _g);
@@ -72,8 +75,8 @@ public:
     void run(const string &_oid, const string &_did, const float* h,
              int dep_time, const Drmhelper& helper);
     
-    void wrapper_run(const string &_oid, const string &_did, Dijkstra &dij,
-                     int dep_time, const Drmhelper &helper);
+    float wrapper_run(const string &_oid, const string &_did,
+                     int dep_time, const Drmhelper &helper, float level = 1.0);
     
     // const after function means the function doesn't change the member variables
 //    vector<pair<string, float> > get_hyperpath() const;

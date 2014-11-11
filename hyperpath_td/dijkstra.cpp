@@ -37,10 +37,15 @@ Dijkstra::Dijkstra(Graph* const _g)
 
 Dijkstra::~Dijkstra(){
     delete [] u;
+    u = nullptr;
     delete [] pre_idx;
+    pre_idx = nullptr;
     delete [] open;
+    open = nullptr;
     delete [] close;
+    close = nullptr;
     delete heap;
+    heap = nullptr;
 }
 
 // u is link label, has to be initialized numeric_limits<float>::infinity()) before running,

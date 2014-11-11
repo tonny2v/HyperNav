@@ -38,6 +38,11 @@ Hyperpath_TD::Hyperpath_TD(Graph* const _g) {
     close = new bool[m];
     HeapD<FHeap> heapD;
     heap = heapD.newInstance(int(m));
+
+    weights_min = new float[m];
+    weights_max = new float[m];
+
+    
     for (int i = 0; i < n; ++i) {
         u_i[i] = numeric_limits<float>::infinity();
         f_i[i] = 0.0;
@@ -55,14 +60,27 @@ Hyperpath_TD::Hyperpath_TD(Graph* const _g) {
 
 Hyperpath_TD::~Hyperpath_TD() {
     delete[] u_i;
+    u_i = nullptr;
     delete[] f_i;
+    f_i = nullptr;
     delete[] p_i;
+    p_i = nullptr;
     
     delete[] u_a;
+    u_a = nullptr;
     delete[] p_a;
+    p_a = nullptr;
     delete[] open;
+    open = nullptr;
     delete[] close;
+    close = nullptr;
+    delete [] weights_min;
+    weights_min = nullptr;
+    delete [] weights_max;
+    weights_max = nullptr;
+
     delete heap;
+    heap = nullptr;
 }
 
 //========================================================================================================
@@ -92,6 +110,12 @@ void Hyperpath_TD::run(const string &_oid, const string &_did, const float* h, i
     // auto get_weights = /*better to use explicit declaration here*/
     // hdf_col: 0 is 5% speed, 1 is 95% speed
     [&](string _a_id, float _dep_time, int mode) -> float {
+        
+        // handle the case when link length is set to be infinite to avoid some links
+        if (helper.get_length(_a_id) == numeric_limits<float>::infinity())
+        {
+            return numeric_limits<float>::infinity();
+        }
         float res_length = helper.get_length(_a_id);
         int interval = 900; // 15 min seconds
         int total = 86400;// day seconds
@@ -219,6 +243,8 @@ void Hyperpath_TD::run(const string &_oid, const string &_did, const float* h, i
         //updating
         float w_max = get_weights(g->get_edge(a_idx)->id, u_i[i_idx], Speed_mode::MIN);
         float w_min = get_weights(g->get_edge(a_idx)->id, u_i[i_idx], Speed_mode::MAX);
+        weights_max[a_idx] = w_max;
+        weights_min[a_idx] = w_min;
         
         if (u_i[j_idx] >= u_i[i_idx] + w_min) {
             //            cout << "max: "<<w_max << " min:"<<w_min<<endl;
@@ -295,9 +321,10 @@ void Hyperpath_TD::run(const string &_oid, const string &_did, const float* h, i
     
 }
 
-void Hyperpath_TD::wrapper_run(const string &_oid, const string &_did, Dijkstra &dij,
-                               int dep_time, const Drmhelper &helper)
+float Hyperpath_TD::wrapper_run(const string &_oid, const string &_did,
+                               int dep_time, const Drmhelper &helper, float level)
 {
+    Dijkstra dij(g);
     // nearest node may not in the node set...
     try {
         g->get_vertex(_oid);
@@ -325,6 +352,12 @@ void Hyperpath_TD::wrapper_run(const string &_oid, const string &_did, Dijkstra 
 //    const std::function<float(string, float, Speed_mode mode)> get_weights =
     auto get_weights =
     [&](const string &_a_id, float _dep_time, int mode) -> float {
+        // handle the case when link length is set to be infinite to avoid some links
+        if (helper.get_length(_a_id) == numeric_limits<float>::infinity())
+        {
+            return numeric_limits<float>::infinity();
+        }
+        
         float res_length = helper.get_length(_a_id);
         int interval = 900; // 15 min seconds
         int total = 86400;// day seconds
@@ -346,7 +379,7 @@ void Hyperpath_TD::wrapper_run(const string &_oid, const string &_did, Dijkstra 
         float buffer[96][2];
         helper.fill_speeds(h5key, buffer);
         float ffspeed = helper.get_ffspeed(_a_id);
-        float speed = buffer[pos][mode] == 0 ? ffspeed : buffer[pos][mode]; // mode 0 is max speed, mode 1 is min speed
+        float speed = buffer[pos][mode] == 0 ? ffspeed : buffer[pos][mode] * 3.6; // mode 0 is max speed, mode 1 is min speed
         res_length -= speed / 3.6 * (900 * (pos + 1) - _dep_time);
         while (res_length > 0) {
             pos += 1;
@@ -406,8 +439,15 @@ void Hyperpath_TD::wrapper_run(const string &_oid, const string &_did, Dijkstra 
         i_idx = g->get_edge(a_idx)->from_vertex->idx;
         j_idx = g->get_edge(a_idx)->to_vertex->idx;
         //updating
-        float w_max = get_weights(g->get_edge(a_idx)->id, u_i[i_idx], Speed_mode::MIN);
         float w_min = get_weights(g->get_edge(a_idx)->id, u_i[i_idx], Speed_mode::MAX);
+        
+        float w_max;
+        if (level == 0) {w_max = w_min;}
+        else {
+            w_max = w_min + level * (get_weights(g->get_edge(a_idx)->id, u_i[i_idx], Speed_mode::MIN) - w_min);
+        }
+        weights_max[a_idx] = w_max;
+        weights_min[a_idx] = w_min;
         
         if (u_i[j_idx] >= u_i[i_idx] + w_min) {
             //            cout << "max: "<<w_max << " min:"<<w_min<<endl;
@@ -441,12 +481,14 @@ void Hyperpath_TD::wrapper_run(const string &_oid, const string &_did, Dijkstra 
     }
     
     // backward pass
-    
+    // TODO: this takes very long time and should be improved
     sort(po_edges.begin(), po_edges.end(), [&](Edge* a, Edge* b)->bool
          {
              //				float w_max = get_weights(a_idx, speeds_max, u_i[i_idx]);
-             float w_min_a = get_weights(a->id, u_i[a->from_vertex->idx], Speed_mode::MAX);
-             float w_min_b = get_weights(b->id, u_i[b->from_vertex->idx], Speed_mode::MAX);
+//             float w_min_a = get_weights(a->id, u_i[a->from_vertex->idx], Speed_mode::MAX);
+//             float w_min_b = get_weights(b->id, u_i[b->from_vertex->idx], Speed_mode::MAX);
+             float w_min_a = weights_min[a->idx];
+             float w_min_b = weights_min[b->idx];
              return u_i[a->from_vertex->idx] + w_min_a > u_i[b->from_vertex->idx] + w_min_b;
          });
     
@@ -455,8 +497,11 @@ void Hyperpath_TD::wrapper_run(const string &_oid, const string &_did, Dijkstra 
         auto i_idx = po_edge->from_vertex->idx;
         auto j_idx = po_edge->to_vertex->idx;
         string a_id = g->get_edge(a_idx)->id;
-        float w_max = get_weights(g->get_edge(a_idx)->id, u_i[i_idx], Speed_mode::MIN);
-        float w_min = get_weights(g->get_edge(a_idx)->id, u_i[i_idx], Speed_mode::MAX);
+//        float w_max = get_weights(g->get_edge(a_idx)->id, u_i[i_idx], Speed_mode::MIN);
+//        float w_min = get_weights(g->get_edge(a_idx)->id, u_i[i_idx], Speed_mode::MAX);
+        float w_max = weights_max[a_idx];
+        float w_min = weights_min[a_idx];
+
         float f_a = w_max == w_min ? LARGENUMBER : 1.0 / (w_max - w_min);
         float P_a = f_a / f_i[j_idx];
         p_a[a_idx] = P_a * p_i[j_idx];
@@ -479,6 +524,7 @@ void Hyperpath_TD::wrapper_run(const string &_oid, const string &_did, Dijkstra 
             hyperpath.push_back(e);
         }
     }
+    return u_i[g->get_vertex(_did)->idx];
 }
 
 

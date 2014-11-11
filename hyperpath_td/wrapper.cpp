@@ -20,6 +20,58 @@ using namespace boost::python;
 namespace bp = boost::python;
 using namespace std;
 
+struct graph_pickle_suite : boost::python::pickle_suite
+{
+    static boost::python::tuple
+    getinitargs(Graph const& g) { return boost::python::make_tuple(g.get_vertex_number(), g.get_edge_number()); }
+    
+    static boost::python::tuple
+    getstate(boost::python::object g_obj){
+        Graph const &g = boost::python::extract<Graph const&>(g_obj);
+        // serialize as vertices, saves space
+/*        boost::python::tuple vertices;
+        for (int i = 0; i < g.get_vertex_number(); ++i) {
+            auto v_i = g.get_vertex(i);
+            boost::python::tuple in_edges;
+            boost::python::tuple out_edges;
+            for (int in = 0; in < v_i->in_cnt ; ++in) {
+                in_edges[in] = v_i->in_edges[in]->id;
+            }
+            
+            for (int in = 0; in < v_i->out_cnt ; ++in) {
+                out_edges[in] = v_i->out_edges[in]->id;
+            }
+            // NOTE: the storage idx may different after de-pickled (actually the same?)
+            vertices[i] = boost::python::make_tuple(v_i->id, in_edges, out_edges);
+        }
+        return vertices;
+ */
+        boost::python::tuple edges;
+        // serialize as edges
+        boost::python::list l;
+        for (int i = 0; i < g.get_edge_number(); ++i) {
+            l.append(g.get_edge(i)->id);
+            l.append(g.get_edge(i)->from_vertex->id);
+            l.append(g.get_edge(i)->to_vertex->id);
+            edges[i] = l;
+        }
+        return edges;
+    }
+    static void
+    setstate(Graph &g, boost::python::tuple state) {
+        for(int i = 0; i< g.get_edge_number(); ++i)
+        {
+            string eid = boost::python::extract<string>(state[i][0]);
+            string fid = boost::python::extract<string>(state[i][1]);
+            string tid = boost::python::extract<string>(state[i][2]);
+            g.add_edge(eid, fid, tid);
+        }
+    }
+ 
+
+};
+
+
 
 void translate(const myexception_notaccessible & e)
 {
@@ -105,6 +157,7 @@ BOOST_PYTHON_MODULE(mygraph)
     // shared_ptr should be added to the class declaration
     class_<Graph, boost::shared_ptr<Graph> > pyGraph("Graph", init<int, int>());
 	pyGraph.def("add_vertex", &Graph::add_vertex);
+    pyGraph.def_pickle(graph_pickle_suite());
 
 	// manually create two function pointers to enable function overload.
 	// autooverloading only appies to void functions
@@ -161,11 +214,14 @@ BOOST_PYTHON_MODULE(mygraph)
 	/// ************************************************************************
     ///                                 Drmhelper
 	/// ************************************************************************
-    class_<Drmhelper> pyDrmhelper("Drmhelper", init<string, string>());
+    class_<Drmhelper> pyDrmhelper("Drmhelper", init<>());
 //    pyDrmhelper.def("get_drm_graph", &Drmhelper::get_drm_graph);
     pyDrmhelper.def("get_nearest_node", &Drmhelper::wrapper_get_nearest_nodecode);
     pyDrmhelper.def("make_subgraph", &Drmhelper::wrapper_make_subgraph);
+    pyDrmhelper.def("make_graph", &Drmhelper::make_graph2);
     pyDrmhelper.def("make_graph", &Drmhelper::make_graph);
+    pyDrmhelper.def("open_hdf", &Drmhelper::open_hdf);
+    pyDrmhelper.def("close_hdf", &Drmhelper::close_hdf);
     
     /// ************************************************************************
     ///                                 Hyperpath_TD

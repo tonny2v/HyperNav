@@ -46,14 +46,22 @@ Hyperpath::Hyperpath(Graph * const _g) {
 
 Hyperpath::~Hyperpath() {
 	delete[] u_i;
+    u_i = nullptr;
 	delete[] f_i;
+    f_i = nullptr;
 	delete[] p_i;
-
+    p_i = nullptr;
+    
 	delete[] u_a;
+    u_a = nullptr;
 	delete[] p_a;
+    p_a = nullptr;
 	delete[] open;
+    open = nullptr;
 	delete[] close;
+    close = nullptr;
 	delete heap;
+    heap = nullptr;
 }
 
 // sf_di, link set overhead

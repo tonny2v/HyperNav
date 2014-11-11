@@ -3,13 +3,14 @@ constexpr auto MAX_IN_DEGREE = 4;
 
 #pragma once
 #include <string>
-//#include <memory>
 #include <vector>
 #include <unordered_map>
 #include <set>
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
 #include <exception>
+
+// TODO: pickle/serialize the graph
 
 using namespace std;
 
@@ -93,7 +94,9 @@ public:
 		for (int i = 0; i < m_cnt; ++i)
 			delete edges[i];
 		delete[] vertices;
+        vertices = nullptr;
 		delete[] edges;
+        edges = nullptr;
 	}
     
     const boost::shared_ptr<Graph> make_reverse(){
