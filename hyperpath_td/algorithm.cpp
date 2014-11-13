@@ -8,11 +8,11 @@
 #include "algorithm.h"
 
 Algorithm::Algorithm() {
-	start_ms = get_now_ms();
+    start_ms = get_now_ms();
 }
 
 Algorithm::~Algorithm() {
-	//TODO Auto-generated destructor stub
+    //TODO Auto-generated destructor stub
 }
 
 int Algorithm::get_now_ms() const

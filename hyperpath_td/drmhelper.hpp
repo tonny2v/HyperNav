@@ -59,6 +59,7 @@ public:
     }
     
     struct Coordinate {float lon; float lat;};
+    
     string get_nearest_nodecode(const Coordinate& lonlat, const string& nodestable)
     {
         float lon = lonlat.lon;
@@ -67,6 +68,7 @@ public:
         string nodecode = "";
         float lon_new, lat_new;
         // be care of CRS
+    
         try {
             pqxx::work x(*conn);
             auto query =
@@ -80,8 +82,10 @@ public:
             lat_new = atof(r[0][2].c_str());
         }
         catch (std::exception &e){
-            cout << e.what() <<endl;
+            std::cerr << e.what() << endl;
         }
+        
+        if (nodecode == "") throw "ERROR: Couldn't find the nearest node";
         return nodecode;
     }
     
@@ -99,18 +103,18 @@ public:
         try {
             pqxx::work x(*conn);
             // slightly slower query but may faster when very large nodes set
-//            SELECT geom, nodecode, ST_x(geom) AS lon, ST_y(geom) AS lat FROM
-//            ST_Transform(ST_GeomFromText('POINT(139.5476 35.9762)', 4326), 4301) AS g1,
-//            (select * from nodes where ST_Contains(ST_Buffer(ST_Transform(ST_GeomFromText('POINT(139.5476 35.9762)', 4326), 3857), 3000), ST_Transform(geom, 3857))) as subgraph_nodes
-//            ORDER BY ST_Distance(geom, g1) LIMIT 1;
-           auto query =
-//           " SELECT ST_AsText(g2) AS nodecode, ST_x(g2) as lon,ST_y(g2) as lat FROM"
-//           " ("
-//            " SELECT"
-//            " ST_GeomFromText('POINT("+ to_string(lon) + " " + to_string(lat) + ")',4301) AS g1,"
-//            " geom AS g2, nodecode FROM high_nodes"
-//            " ) AS A"
-//           " ORDER BY ST_Distance(A.g1, A.g2) LIMIT 1;";
+            //            SELECT geom, nodecode, ST_x(geom) AS lon, ST_y(geom) AS lat FROM
+            //            ST_Transform(ST_GeomFromText('POINT(139.5476 35.9762)', 4326), 4301) AS g1,
+            //            (select * from nodes where ST_Contains(ST_Buffer(ST_Transform(ST_GeomFromText('POINT(139.5476 35.9762)', 4326), 3857), 3000), ST_Transform(geom, 3857))) as subgraph_nodes
+            //            ORDER BY ST_Distance(geom, g1) LIMIT 1;
+            auto query =
+            //           " SELECT ST_AsText(g2) AS nodecode, ST_x(g2) as lon,ST_y(g2) as lat FROM"
+            //           " ("
+            //            " SELECT"
+            //            " ST_GeomFromText('POINT("+ to_string(lon) + " " + to_string(lat) + ")',4301) AS g1,"
+            //            " geom AS g2, nodecode FROM high_nodes"
+            //            " ) AS A"
+            //           " ORDER BY ST_Distance(A.g1, A.g2) LIMIT 1;";
             //***********************************************************
             " SELECT  St_AsText(geom), St_X(St_Transform(geom, 4326)), St_Y(St_Transform(geom, 4326)) FROM"
             " (SELECT geom FROM " + nodestable + " ORDER BY ST_Distance(ST_GeomFromText('POINT("+
@@ -127,7 +131,7 @@ public:
         }
         return boost::python::make_tuple(nodecode, boost::python::make_tuple(lon_new, lat_new));
     }
-   
+    
     const boost::shared_ptr<Graph> make_graph(const string& links_view, int n, int m)
     {
         if(! conn->is_open()) conn->activate();
@@ -169,7 +173,7 @@ public:
         //                string linkcode = "border" + row["fnode"].as<string>() +" "+ row["tnode"].as<string>();
         //                g->add_edge(linkcode, row["fnode"].as<string>(), row["tnode"].as<string>());
         //            }
-        //            
+        //
         //        } catch (std::exception &e) {
         //            cout << e.what() << endl;
         //        }
@@ -182,47 +186,47 @@ public:
     }
     
     const boost::shared_ptr<Graph> make_graph2(const string& links_view, int n, int m,
-                                              int length_lowerlimit = numeric_limits<int>::infinity(), int count_upperlimit = 0)
+                                               int length_lowerlimit = numeric_limits<int>::infinity(), int count_upperlimit = 0)
     {
         if(! conn->is_open()) conn->activate();
         
         pqxx::work x(*conn);
         
-//        string query = "SELECT COUNT(*) AS n FROM (SELECT meshcode || "
-//        "fnodecode FROM " + links_view + " UNION SELECT meshcode || "
-//        "tnodecode FROM " + links_view + ") AS t;";
-//        try {
-//            //***********************************************************
-//            // auto calculate m and n may be slow when the linksview is large
-//            // (when O and D are far from each other), consider hierarchy based methods
-//            r = x.exec(query);
-//            n = r[0]["n"].as<int>();
-//        }
-//        catch(std::exception &e)
-//        {
-//            cout << e.what() << endl;
-//        }
-//        
-//        query = "SELECT count(*) AS m FROM " + links_view + ";";
-//        try {
-//            r = x.exec(query);
-//            m = r[0]["m"].as<int>();
-//        
-//        catch (std::exception &e) {
-//            cout << e.what() << endl;
-//        }
+        //        string query = "SELECT COUNT(*) AS n FROM (SELECT meshcode || "
+        //        "fnodecode FROM " + links_view + " UNION SELECT meshcode || "
+        //        "tnodecode FROM " + links_view + ") AS t;";
+        //        try {
+        //            //***********************************************************
+        //            // auto calculate m and n may be slow when the linksview is large
+        //            // (when O and D are far from each other), consider hierarchy based methods
+        //            r = x.exec(query);
+        //            n = r[0]["n"].as<int>();
+        //        }
+        //        catch(std::exception &e)
+        //        {
+        //            cout << e.what() << endl;
+        //        }
+        //
+        //        query = "SELECT count(*) AS m FROM " + links_view + ";";
+        //        try {
+        //            r = x.exec(query);
+        //            m = r[0]["m"].as<int>();
+        //
+        //        catch (std::exception &e) {
+        //            cout << e.what() << endl;
+        //        }
         
-//        n = 91603; // hard set, distinct coordinate points
+        //        n = 91603; // hard set, distinct coordinate points
         //select distinct * from (
         //SELECT st_astext(ST_Startpoint(geom)) FROM high_links
         //union all select st_astext(st_endpoint(geom)) from high_links) as t
         
-//        m = 175784;
+        //        m = 175784;
         boost::shared_ptr<Graph> g (boost::make_shared<Graph>(n, m));
-//        string query = "SELECT linkcode, h5key, basic_length AS length, ffspeed,"
-//        "meshcode || '-' || fnodecode AS fnode, "
-//        "meshcode || '-' || tnodecode AS tnode "
-//        "FROM links;";
+        //        string query = "SELECT linkcode, h5key, basic_length AS length, ffspeed,"
+        //        "meshcode || '-' || fnodecode AS fnode, "
+        //        "meshcode || '-' || tnodecode AS tnode "
+        //        "FROM links;";
         
         string query = " SELECT linkcode, h5key, basic_length AS length, ffspeed,"
         " ST_AsText(ST_StartPoint(geom)) AS fnode,"
@@ -230,7 +234,7 @@ public:
         " ST_AsGeojson(ST_Transform(geom, 4326)) AS geojson,"
         " count "
         " FROM " + links_view + ";";
-
+        
         
         try{
             // TODO: this can be changed to the links inside the rectangle only
@@ -251,20 +255,20 @@ public:
         }
         
         // connect mesh border nodes
-//        query = "SELECT nodecode AS fnode, connect_meshcode ||'-'|| connect_nodecode AS tnode FROM nodes WHERE connect_meshcode!='000000'";
-// 
-//        try{
-//            r = x.exec(query);
-//            for (const auto &row : r)
-//            {
-//                string linkcode = "border" + row["fnode"].as<string>() +" "+ row["tnode"].as<string>();
-//                g->add_edge(linkcode, row["fnode"].as<string>(), row["tnode"].as<string>());
-//            }
-//            
-//        } catch (std::exception &e) {
-//            cout << e.what() << endl;
-//        }
- 
+        //        query = "SELECT nodecode AS fnode, connect_meshcode ||'-'|| connect_nodecode AS tnode FROM nodes WHERE connect_meshcode!='000000'";
+        //
+        //        try{
+        //            r = x.exec(query);
+        //            for (const auto &row : r)
+        //            {
+        //                string linkcode = "border" + row["fnode"].as<string>() +" "+ row["tnode"].as<string>();
+        //                g->add_edge(linkcode, row["fnode"].as<string>(), row["tnode"].as<string>());
+        //            }
+        //
+        //        } catch (std::exception &e) {
+        //            cout << e.what() << endl;
+        //        }
+        
         drm_graph = g;
         if (drm_graph == nullptr)
             throw "ERROR: graph not yet set";
@@ -282,7 +286,7 @@ public:
         const float lat_o = origin.lat;
         const float lon_d = destination.lon;
         const float lat_d = destination.lat;
-
+        
         pqxx::work x(*conn);
         string query =
         " DROP VIEW IF EXISTS subgraph_links;"
@@ -311,31 +315,31 @@ public:
         
         //TODO: use WHERE ST_Intersects(nodes.geom, links.geom) to get the subgraph_nodes
         
-//        query =
-//        " DROP TABLE IF EXISTS subgraph_links;"
-//        " DROP TABLE IF EXISTS subgraph_links;"
-//        " DROP TABLE IF EXISTS subgraph_nodes;"
-//        " DROP TABLE IF EXISTS box;"
-//        " DROP TABLE IF EXISTS buffer_o;"
-//        " DROP TABLE IF EXISTS buffer_d;"
-//        " SELECT ST_Buffer("
-//        "                 ST_Transform"
-//        "                 ("
-//        "                  ST_SetSRID(ST_MakePoint("+ to_string(lon_o)  + "," + to_string(lat_o) + "), 4326), 3857"
-//        "                  ),"
-//        " )," + to_string(buf_dist) + " ) AS geom;"
-//        "                 ) AS geom INTO Buffer_O;"
-//        " SELECT ST_Buffer("
-//        "                 ST_Transform"
-//        "                 ("
-//        "                  ST_SetSRID(ST_MakePoint("+ to_string(lon_d) + "," + to_string(lat_d) + "), 4326), 3857"
-//        "                  ),"
-//        " )," + to_string(buf_dist) + " ) AS geom;"
-//        "                 ) AS geom INTO Buffer_D;"
-//        " SELECT ST_Envelope("
-//        "                   ST_UNION(Buffer_O.geom, Buffer_D.geom)"
-//        "                   ) AS geom INTO box FROM buffer_o, buffer_d;"
-//        " SELECT links.* INTO subgraph_links FROM links, box WHERE ST_Contains( ST_Transform(box.geom, 4301), links.geom);";
+        //        query =
+        //        " DROP TABLE IF EXISTS subgraph_links;"
+        //        " DROP TABLE IF EXISTS subgraph_links;"
+        //        " DROP TABLE IF EXISTS subgraph_nodes;"
+        //        " DROP TABLE IF EXISTS box;"
+        //        " DROP TABLE IF EXISTS buffer_o;"
+        //        " DROP TABLE IF EXISTS buffer_d;"
+        //        " SELECT ST_Buffer("
+        //        "                 ST_Transform"
+        //        "                 ("
+        //        "                  ST_SetSRID(ST_MakePoint("+ to_string(lon_o)  + "," + to_string(lat_o) + "), 4326), 3857"
+        //        "                  ),"
+        //        " )," + to_string(buf_dist) + " ) AS geom;"
+        //        "                 ) AS geom INTO Buffer_O;"
+        //        " SELECT ST_Buffer("
+        //        "                 ST_Transform"
+        //        "                 ("
+        //        "                  ST_SetSRID(ST_MakePoint("+ to_string(lon_d) + "," + to_string(lat_d) + "), 4326), 3857"
+        //        "                  ),"
+        //        " )," + to_string(buf_dist) + " ) AS geom;"
+        //        "                 ) AS geom INTO Buffer_D;"
+        //        " SELECT ST_Envelope("
+        //        "                   ST_UNION(Buffer_O.geom, Buffer_D.geom)"
+        //        "                   ) AS geom INTO box FROM buffer_o, buffer_d;"
+        //        " SELECT links.* INTO subgraph_links FROM links, box WHERE ST_Contains( ST_Transform(box.geom, 4301), links.geom);";
         cout << query << endl;
         try
         {
@@ -372,10 +376,10 @@ public:
             cout << e.what() << endl;
         }
         
-//        query = "SELECT linkcode, h5key, basic_length AS length, ffspeed,"
-//        "meshcode || '-' || fnodecode AS fnode, "
-//        "meshcode || '-' || tnodecode AS tnode "
-//        "FROM subgraph_links;";
+        //        query = "SELECT linkcode, h5key, basic_length AS length, ffspeed,"
+        //        "meshcode || '-' || fnodecode AS fnode, "
+        //        "meshcode || '-' || tnodecode AS tnode "
+        //        "FROM subgraph_links;";
         query = " SELECT linkcode, h5key, basic_length AS length, ffspeed,"
         " ST_AsText(ST_StartPoint(geom)) AS fnode,"
         " ST_AsText(ST_EndPoint(geom))  AS tnode"
@@ -404,8 +408,9 @@ public:
         return drm_graph;
     }
     
-    //TODO: where roadtype = ??
-    const boost::shared_ptr<Graph> wrapper_make_subgraph(const boost::python::object &origin, const boost::python::object &destination, const string& condition, int buf_dist)
+    //　TODO: where roadtype = ??
+    //　http://www.cplusplus.com/doc/tutorial/exceptions/
+    const boost::shared_ptr<Graph> wrapper_make_subgraph(const boost::python::object &origin, const boost::python::object &destination, const string& condition, int buf_dist) throw()
     {
         if(! conn->is_open()) conn->activate();
         const float lon_o = boost::python::extract<float>(origin[0]);
@@ -435,7 +440,7 @@ public:
         " ("
         "       ST_SetSRID(ST_MakePoint("+ to_string(lon_d) + "," + to_string(lat_d) + "), 4326), 3857"
         " )," + to_string(buf_dist) + " ) AS geom;"
-        " CREATE TEMP VIEW box as select ST_Envelope( "
+        " CREATE TEMP VIEW box as SELECT ST_Envelope( "
         " ST_UNION(Buffer_O.geom, Buffer_D.geom) "
         " ) AS geom FROM buffer_o, buffer_d;"
         " CREATE TEMP VIEW subgraph_links AS SELECT links.* FROM links, box WHERE ST_Contains( box.geom, ST_Transform(links.geom, 3857)) AND "
@@ -469,7 +474,7 @@ public:
             cout << e.what() << endl;
         }
         
-        query = "SELECT count(*) as m FROM subgraph_links;";
+        query = "SELECT count(*) AS m FROM subgraph_links;";
         try {
             r = x.exec(query);
             m = r[0]["m"].as<int>();
@@ -478,16 +483,16 @@ public:
             cout << e.what() << endl;
         }
         
-//        query = "SELECT linkcode, h5key, basic_length AS length, ffspeed,"
-//        "meshcode || '-' || fnodecode AS fnode, "
-//        "meshcode || '-' || tnodecode AS tnode "
-//        "FROM subgraph_links;";
+        //        query = "SELECT linkcode, h5key, basic_length AS length, ffspeed,"
+        //        "meshcode || '-' || fnodecode AS fnode, "
+        //        "meshcode || '-' || tnodecode AS tnode "
+        //        "FROM subgraph_links;";
         
         query = " SELECT linkcode, h5key, basic_length AS length, ffspeed,"
         " ST_AsText(ST_StartPoint(geom)) AS fnode,"
         " ST_AsText(ST_EndPoint(geom))  AS tnode"
         " FROM subgraph_links;";
-
+        
         try{
             // TODO: this can be changed to the links inside the rectangle only
             r = x.exec(query);
@@ -504,10 +509,10 @@ public:
             drm_graph = g;
             
         } catch (std::exception &e) {
-            cout << e.what() << endl;
+            std::cerr << e.what() << std::endl;
         }
         if (drm_graph == nullptr)
-            throw "ERROR: graph not yet set";
+            throw GraphException::GraphNotSet();
         
         return drm_graph;
     }

@@ -24,26 +24,35 @@ using namespace std;
 using namespace boost;
 
 const Graph get_papola_graph(float* const _weight_min, float* const _weight_max) {
+    
 	Graph g(3, 4);
 	string vertices[3] = { "A", "B", "C" };
+    
 	for (auto v : vertices)
-		g.add_vertex(v);
+    {
+        g.add_vertex(v);
+    }
+    
 	g.add_edge("1-AC", "A", "C");
 	g.add_edge("2-AB", "A", "B");
 	g.add_edge("3-BC_up", "B", "C");
 	g.add_edge("4-BC_down", "B", "C");
+    
 	return g;
 }
 
 const Graph get_test_graph(float* const _weights_min, float* const _weights_max) {
+    
 	Graph g(6, 11);
 	string vertices[6] = { "A", "B", "C", "D", "E", "F" };
 
-	for (auto v : vertices)
+    for (auto v : vertices){
 		g.add_vertex(v);
-
+    }
+    
 	g.add_edge("AB", g.get_vertex("A"), g.get_vertex("B"));
 	auto AB = g.get_edge("AB")->idx;
+    
 	_weights_min[AB] = 2;
 	_weights_max[AB] = 4;
 

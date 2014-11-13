@@ -24,7 +24,7 @@
  *                  output.
  */
 class Heap {
-  public:
+public:
     virtual ~Heap() { };
     virtual int deleteMin() = 0;
     virtual void insert(int item, double key) = 0;
@@ -35,14 +35,14 @@ class Heap {
 };
 
 class HeapDesc {
-  public:
+public:
     virtual ~HeapDesc() { };
     virtual Heap *newInstance(int n) const = 0;
 };
 
 template <class T>
 class HeapD: public HeapDesc {
-  public:
+public:
     Heap *newInstance(int n) const { return new T(n); };
 };
 

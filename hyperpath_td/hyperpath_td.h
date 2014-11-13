@@ -55,7 +55,7 @@ private:
     float* p_a; // edge choice possiblities
     bool* open;
     bool* close;
-//    vector<pair<string, float> > hyperpath;
+    //    vector<pair<string, float> > hyperpath;
     vector<ResEdge> hyperpath;
     Heap* heap;
     vector<string> path_rec;
@@ -76,10 +76,10 @@ public:
              int dep_time, const Drmhelper& helper);
     
     float wrapper_run(const string &_oid, const string &_did,
-                     int dep_time, const Drmhelper &helper, float level = 1.0);
+                      int dep_time, const Drmhelper &helper, float level = 1.0);
     
     // const after function means the function doesn't change the member variables
-//    vector<pair<string, float> > get_hyperpath() const;
+    //    vector<pair<string, float> > get_hyperpath() const;
     vector<ResEdge> get_hyperpath() const;
     
     bp::list wrapper_get_path_rec(const string &_oid, const string &_did) const;

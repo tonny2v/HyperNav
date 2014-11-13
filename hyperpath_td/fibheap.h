@@ -28,7 +28,7 @@
  * item        - the number of the item that the node is associated with.
  */
 class FHeapNode {
-  public:
+public:
     FHeapNode *parent;
     FHeapNode *left, *right;
     FHeapNode *child;
@@ -59,24 +59,24 @@ class FHeapNode {
  *             of key comparisons.
  */
 class FHeap: public Heap {
-  public:
+public:
     FHeap(int n);
     ~FHeap();
-
+    
     int deleteMin();
     void insert(int item, double k);
     void decreaseKey(int item, double newValue);
     int nItems() const { return itemCount; }
-
+    
     double nComps() const { return compCount; }
     void dump() const;
-
-  private:
+    
+private:
     FHeapNode **trees;
     FHeapNode **nodes;
     int maxNodes, maxTrees, itemCount, treeSum;
     double compCount;
-
+    
     void meld(FHeapNode *treeList);
     static void dumpNodes(FHeapNode *node, int level);
 };
