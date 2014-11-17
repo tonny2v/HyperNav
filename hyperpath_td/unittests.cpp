@@ -130,6 +130,7 @@ Drmhelper helper;
 //
 TEST(NOEXPRESS, WRONGSP)
 {
+//    auto g = helper.make_graph2("noexpress", 182778, 453430, 30, 20);
     auto g = helper.make_graph2("noexpress", 182778, 453430);
     
     // add try clause here
@@ -139,19 +140,14 @@ TEST(NOEXPRESS, WRONGSP)
         std::cerr << e.what() << std::endl;
         return;
     }
-    
-    // for testing wrong SP at 43200
-    float o_lon = 139.681;
-    float o_lat=35.607;
-    float d_lon=139.62975;
-    float d_lat=35.6088;
-    
-    // for testing FIFO at 3540
-    o_lon = 139.6810375 ;
-    o_lat=35.6068666666;
-    d_lon=139.678225;
-    d_lat=35.6074083333333;
-    
+   
+//   http://localhost:5000/tdhp?o_lon=139.67782&o_lat=35.610134&d_lon=139.464216&d_lat=35.504513&level=1&t=0
+    double o_lon=139.67782;
+    double o_lat=35.610134;
+    double d_lon=139.464216;
+    double d_lat=35.504513;
+    int dep_time = 0;
+    float level = 1.0;
     
     Drmhelper::Coordinate o = {o_lon, o_lat};
     Drmhelper::Coordinate d = {d_lon, d_lat};
@@ -172,16 +168,24 @@ TEST(NOEXPRESS, WRONGSP)
     cout << g->get_vertex_number()<<endl;
     cout << g->get_edge_number()<<endl;
     
-    cout << "expected arrival time: "<< alg.wrapper_run(oid, did, 3599, helper, 0.0) << endl; // no hyperpath
+    cout << "expected arrival time: "<< alg.run(oid, did, dep_time, helper, level) << endl; // no hyperpath
     
     int cnt = 0;
+//    for (const auto &i : alg.get_hyperpath())
+//    {
+//        cnt++;
+//        cout << cnt<< ": " << i.id << "," << i.p << "," << i.od_flg << ","<< endl;
+//    }
+    cout << "\"linkcode\" in (";
     for (const auto &i : alg.get_hyperpath())
     {
-        cnt ++;
-        cout << cnt<< ": " << i.id << "," << i.p << "," << i.od_flg << ","<< i.len << endl;
+        cout <<'\''<<i.id<<'\''<<",";
     }
+    cout << ")" << endl;
+    
     helper.close_hdf();
 }
+
 
 //TEST (SquareRootTest, ZeroAndNegativeNos) {
 //    ASSERT_EQ (0.0, 0.0);

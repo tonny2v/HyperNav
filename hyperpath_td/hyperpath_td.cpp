@@ -92,192 +92,9 @@ Hyperpath_TD::~Hyperpath_TD() {
 // but note that the link must be added according to the profile link sequence.
 enum Speed_mode {MAX, MIN};
 
-void Hyperpath_TD::run(const string &_oid, const string &_did, const float* h, int dep_time, const Drmhelper &helper) {
-    
-    //    Tdhelper helper(HDF5, "speeds", links_view);
-    
-    // TODO: define the lambda function according to Sung et. al. 2000
-    
-    // Non-passing travel time is necessary only for the cases when link length is longer than 15min's travel
-    // especially the freeways.
-    // speeds is m * 96 or less 1-D array for every 15 min case
-    // if road length > 10 * 0.25 * 1000 = 2500 m, use the non-pass calculating function, else directly get the travel time
-    // whether lambda function is processed as inline function and optimized is fully dependent on the compiler and compile optimization level
-    // TODO: all passing by reference?
-    const std::function<float(string, float, Speed_mode mode)> get_weights =
-    // auto get_weights = /*better to use explicit declaration here*/
-    // hdf_col: 0 is 5% speed, 1 is 95% speed
-    [&](string _a_id, float _dep_time, int mode) -> float {
-        
-        // handle the case when link length is set to be infinite to avoid some links
-        if (helper.get_length(_a_id) == numeric_limits<float>::infinity())
-        {
-            return numeric_limits<float>::infinity();
-        }
-        float res_length = helper.get_length(_a_id);
-        int interval = 900; // 15 min seconds
-        int total = 86400;// day seconds
-        int size = total / interval;
-        vector<int> dep_times(size);
-        for (int i = 0; i< size; ++i) {
-            dep_times[i] = i * interval;
-        }
-        int overday = 0;
-        // get time dependent speed
-        while (dep_time >= total) { _dep_time -= total; overday++; }
-        int pos = 0;
-        if (_dep_time!= 0)
-        {
-            pos = int(std::lower_bound(dep_times.begin(),
-                                       dep_times.end(),
-                                       _dep_time) - dep_times.begin()) - 1 ;
-        }
-        // get h5key of _a_id
-        hsize_t h5key = helper.get_h5key(_a_id);
-        
-        // set  buffer by reference
-        float buffer[96][2];
-        helper.fill_speeds(h5key, buffer);
-        
-        float ffspeed = helper.get_ffspeed(_a_id);
-        
-        // unit: km/h
-        float speed = buffer[pos][mode] == 0 ? ffspeed : buffer[pos][mode]; // mode 0 is max speed, mode 1 is min speed
-        //        float nonfifo_time = res_length / (speed / 3.6);
-        res_length -= speed / 3.6 * (900 * (pos + 1) - _dep_time);
-        while (res_length > 0) {
-            pos += 1;
-            res_length -= speed / 3.6 * ( 900 * (pos + 1) - 900 * pos);
-        }
-        float arr_time = 900 *(pos+1) + res_length/ (speed / 3.6);
-        float fifo_time = arr_time - (_dep_time - overday * total);
-        return fifo_time;
-    };
-    
-    auto o_idx = g->get_vidx(_oid);
-    auto d_idx = g->get_vidx(_did);
-    
-    // initialization
-    vector<Edge*> po_edges;
-    
-    // in time-dependent cases, label of origin should be the departure time
-    u_i[o_idx] = dep_time;
-    p_i[d_idx] = 1.0;
-    
-    int i_idx = o_idx;
-    int j_idx = 0;
-    int a_idx = 0;
-    
-    // forward pass
-    while (true) {
-        auto i = g->get_vertex(i_idx);
-        for (auto edge : i->out_edges) {
-            a_idx = edge->idx;
-            i_idx = edge->from_vertex->idx;
-            j_idx = edge->to_vertex->idx;
-            
-            float temp = u_i[i_idx] + get_weights(g->get_edge(a_idx)->id, u_i[i_idx], Speed_mode::MAX)
-            + h[j_idx];
-            if (u_a[a_idx] > temp) {
-                u_a[a_idx] = temp;
-                if (!close[a_idx]) {
-                    if (!open[a_idx]) {
-                        heap->insert(a_idx, u_a[a_idx]);
-                        open[a_idx] = true;
-                    } else {
-                        heap->decreaseKey(a_idx, temp);
-                    }
-                }
-            }
-        }
-        
-        // one-way of search to bound case
-        if (0 == heap->nItems()) {
-            break;
-        } else {
-            a_idx = heap->deleteMin();
-        }
-        open[a_idx] = false;
-        close[a_idx] = true;
-        i_idx = g->get_edge(a_idx)->from_vertex->idx;
-        j_idx = g->get_edge(a_idx)->to_vertex->idx;
-        //updating
-        float w_max = get_weights(g->get_edge(a_idx)->id, u_i[i_idx], Speed_mode::MIN);
-        float w_min = get_weights(g->get_edge(a_idx)->id, u_i[i_idx], Speed_mode::MAX);
-        weights_max[a_idx] = w_max;
-        weights_min[a_idx] = w_min;
-        
-        if (u_i[j_idx] >= u_i[i_idx] + w_min) {
-            float f_a = w_max == w_min ? LARGENUMBER : 1.0 / (w_max - w_min);
-            float P_a = f_a / (f_i[j_idx] + f_a);
-            string a_id = g->get_edge(a_idx)->id;
-            if (f_i[j_idx] == 0) {
-                u_i[j_idx] = u_i[i_idx] + w_max;
-            } else {
-                float tmp = (1 - P_a) * u_i[j_idx] + P_a * (u_i[i_idx] + w_min);
-                if (u_i[j_idx] > tmp)
-                    u_i[j_idx] = tmp;
-            }
-            f_i[j_idx] += f_a;
-            po_edges.push_back(g->get_edge(a_idx)); //hyperpath is saved by id index of links
-            
-        }
-        if (u_i[i_idx] + w_min + h[j_idx] > u_i[d_idx])
-            break;
-        i_idx = j_idx;
-        
-    }
-    
-    if (u_i[d_idx] == numeric_limits<float>::infinity())
-    {
-        throw GraphException::NotAccessible();
-    }
-    
-    // backward pass
-    sort(po_edges.begin(), po_edges.end(), [&](Edge* a, Edge* b)->bool
-         {
-             float w_min_a = get_weights(a->id, u_i[a->from_vertex->idx], Speed_mode::MAX);
-             float w_min_b = get_weights(b->id, u_i[b->from_vertex->idx], Speed_mode::MAX);
-             return u_i[a->from_vertex->idx] + w_min_a > u_i[b->from_vertex->idx] + w_min_b;
-         });
-    
-    for (auto po_edge : po_edges) {
-        auto a_idx = po_edge->idx;
-        auto i_idx = po_edge->from_vertex->idx;
-        auto j_idx = po_edge->to_vertex->idx;
-        string a_id = g->get_edge(a_idx)->id;
-        float w_max = get_weights(g->get_edge(a_idx)->id, u_i[i_idx], Speed_mode::MIN);
-        float w_min = get_weights(g->get_edge(a_idx)->id, u_i[i_idx], Speed_mode::MAX);
-        float f_a = w_max == w_min ? LARGENUMBER : 1.0 / (w_max - w_min);
-        float P_a = f_a / f_i[j_idx];
-        p_a[a_idx] = P_a * p_i[j_idx];
-        p_i[i_idx] += p_a[a_idx];
-    }
-    
-    for (auto po_edge : po_edges) {
-        auto linkcode = po_edge->id;
-        int odflag = 0;
-        if(po_edge->from_vertex->id == _oid) odflag = 1;
-        else if(po_edge->to_vertex->id == _did) odflag = 2;
-        
-        // ignore small possibilites caused by computational accuracy setting (LARGENUMBER)
-        if (p_a[po_edge->idx] > 0.000001)
-        {
-            ResEdge e {linkcode, p_a[po_edge->idx], helper.get_geojson(linkcode), "", "", odflag, helper.get_length(linkcode), po_edge->from_vertex->id, po_edge->to_vertex->id};
-            hyperpath.push_back(e);
-        }
-    }
-    
-    // the for_each lambda way
-    
-    //    	for_each(po_edges.begin(), po_edges.end(), [&](Edge* po_edge){
-    //    		if (p_a[po_edge->idx] != 0)
-    //    			hyperpath.push_back(make_pair(po_edge->id, p_a[po_edge->idx]));
-    //    	});
-    
-}
 
-float Hyperpath_TD::wrapper_run(const string &_oid, const string &_did,
+
+float Hyperpath_TD::run(const string &_oid, const string &_did,
                                 int dep_time, const Drmhelper &helper, float level)
 {
     Dijkstra dij(g);
@@ -323,7 +140,7 @@ float Hyperpath_TD::wrapper_run(const string &_oid, const string &_did,
             dep_times[i] = i * interval;
         }
         int overday = 0;
-        while (dep_time >= total) { _dep_time -= total; overday++; }
+        while (_dep_time >= total) { _dep_time -= total; overday++; }
         int pos = 0;
         if (_dep_time!= 0)
         {
@@ -345,7 +162,7 @@ float Hyperpath_TD::wrapper_run(const string &_oid, const string &_did,
             res_length -= speed / 3.6 * ( 900 * (pos + 1) - 900 * pos);
         }
         float arr_time = 900 *(pos+1) + res_length/ (speed / 3.6);
-        float fifo_time = arr_time - (_dep_time - overday * total);
+        float fifo_time = arr_time - _dep_time;
         return fifo_time;
     };
     
@@ -410,6 +227,7 @@ float Hyperpath_TD::wrapper_run(const string &_oid, const string &_did,
         
         if (u_i[j_idx] >= u_i[i_idx] + w_min) {
             float f_a = w_max == w_min ? LARGENUMBER : 1.0 / (w_max - w_min);
+            // should be recalculated by f_a / sum(f) since u_i is updated
             float P_a = f_a / (f_i[j_idx] + f_a);
             
             string a_id = g->get_edge(a_idx)->id;
@@ -421,13 +239,16 @@ float Hyperpath_TD::wrapper_run(const string &_oid, const string &_did,
                 if (u_i[j_idx] > tmp)
                     u_i[j_idx] = tmp;
             }
-            
+//            if (j_idx == 152237)
+//            {
+//                cout << "";
+//            }
             f_i[j_idx] += f_a;
             po_edges.push_back(g->get_edge(a_idx)); //hyperpath is saved by id index of links
             
         }
-        if (u_i[i_idx] + w_min + h[j_idx] > u_i[d_idx])
-            //        if (u_i[i_idx] + w_min  > u_i[d_idx])
+//        if (u_i[i_idx] + w_min + h[j_idx] > u_i[d_idx])
+        if (u_i[i_idx] + w_min  > u_i[d_idx])
             break;
         i_idx = j_idx;
         
@@ -439,7 +260,6 @@ float Hyperpath_TD::wrapper_run(const string &_oid, const string &_did,
     }
     
     // backward pass
-    // TODO: this takes very long time and should be improved
     sort(po_edges.begin(), po_edges.end(), [&](Edge* a, Edge* b)->bool
          {
              //				float w_max = get_weights(a_idx, speeds_max, u_i[i_idx]);
@@ -449,25 +269,32 @@ float Hyperpath_TD::wrapper_run(const string &_oid, const string &_did,
              float w_min_b = weights_min[b->idx];
              return u_i[a->from_vertex->idx] + w_min_a > u_i[b->from_vertex->idx] + w_min_b;
          });
-    
-    for (auto po_edge : po_edges) {
+    int cnt = 0;
+    for (const auto& po_edge : po_edges) {
         auto a_idx = po_edge->idx;
         auto i_idx = po_edge->from_vertex->idx;
         auto j_idx = po_edge->to_vertex->idx;
         string a_id = g->get_edge(a_idx)->id;
         //        float w_max = get_weights(g->get_edge(a_idx)->id, u_i[i_idx], Speed_mode::MIN);
         //        float w_min = get_weights(g->get_edge(a_idx)->id, u_i[i_idx], Speed_mode::MAX);
+//        cout << ++cnt << a_id << endl;
         float w_max = weights_max[a_idx];
         float w_min = weights_min[a_idx];
         
         float f_a = w_max == w_min ? LARGENUMBER : 1.0 / (w_max - w_min);
+        
+        // TODO: I think it's wrong because of f_i was wrongly added before in time-dependent case
         float P_a = f_a / f_i[j_idx];
+//        if (a_id == "533914-29111065")
+//        {
+//            cout << j_idx;
+//        }
         p_a[a_idx] = P_a * p_i[j_idx];
         p_i[i_idx] += p_a[a_idx];
     }
     
-    for (auto po_edge : po_edges) {
-        if (p_a[po_edge->idx] > 0.000001)
+    for (const auto &po_edge : po_edges) {
+        if (p_a[po_edge->idx] != 0)
         {
             int odflag = 0;
             if(po_edge->from_vertex->id == _oid) odflag = 1;

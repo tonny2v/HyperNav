@@ -19,6 +19,8 @@
 #include <boost/python/tuple.hpp>
 #include <boost/python.hpp>
 #include "graph.hpp"
+#include <boost/lexical_cast.hpp>
+
 using namespace std;
 class Drmhelper {
     
@@ -58,28 +60,39 @@ public:
         H5Dclose(dataset);
     }
     
-    struct Coordinate {float lon; float lat;};
+    struct Coordinate {double lon; double lat;};
     
     string get_nearest_nodecode(const Coordinate& lonlat, const string& nodestable)
     {
-        float lon = lonlat.lon;
-        float lat = lonlat.lat;
+        auto lon = lonlat.lon;
+        auto lat = lonlat.lat;
         if(! conn->is_open()) conn->activate();
         string nodecode = "";
-        float lon_new, lat_new;
+        double lon_new, lat_new;
         // be care of CRS
     
         try {
             pqxx::work x(*conn);
-            auto query =
-            " SELECT  St_AsText(geom), St_X(St_Transform(geom, 4326)), St_Y(St_Transform(geom, 4326)) FROM"
-            " (SELECT geom FROM " + nodestable + " ORDER BY ST_Distance(ST_GeomFromText('POINT("+
-            to_string(lon) + " " + to_string(lat) + ")',4301) , geom) LIMIT 1 ) AS t;";
+//            auto query =
+//            " SELECT  St_AsText(geom), St_X(St_Transform(geom, 4326)), St_Y(St_Transform(geom, 4326)) FROM"
+//            " (SELECT geom FROM " + nodestable + " ORDER BY ST_Distance(ST_GeomFromText('POINT("+
+//            to_string(lon) + " " + to_string(lat) + ")', 4326) , geom) LIMIT 1 ) AS t;";
+            
+            string query = " SELECT  St_AsText(geom), St_X(St_Transform(geom, 4326)), St_Y(St_Transform(geom, 4326)) FROM"
+            " (SELECT geom FROM " + nodestable + " ORDER BY ST_Distance(ST_Transform(ST_GeomFromText('POINT("+
+            to_string(lon) + " " + to_string(lat) + ")',4326), 4301) , geom) LIMIT 1 ) AS t;";
             
             r = x.exec(query);
             nodecode = r[0][0].c_str();
-            lon_new = atof(r[0][1].c_str());
-            lat_new = atof(r[0][2].c_str());
+//            lon_new = atof(r[0][1].c_str());
+//            try {
+            lon_new = boost::lexical_cast<double>(r[0][1].c_str());
+//            } catch(bad_lexical_cast&) {
+//                //Do your errormagic
+//            }
+//            lat_new = atof(r[0][2].c_str());
+            lat_new = boost::lexical_cast<double>(r[0][2].c_str());
+
         }
         catch (std::exception &e){
             std::cerr << e.what() << endl;
@@ -94,11 +107,11 @@ public:
     // -- 533974-0308: 139.6067, 35.9907
     boost::python::tuple wrapper_get_nearest_nodecode(boost::python::object lonlat, const string& nodestable)
     {
-        float lon = boost::python::extract<float>(lonlat[0]);
-        float lat = boost::python::extract<float>(lonlat[1]);
+        double lon = boost::python::extract<double>(lonlat[0]);
+        double lat = boost::python::extract<double>(lonlat[1]);
         if(! conn->is_open()) conn->activate();
         string nodecode = "";
-        float lon_new, lat_new;
+        double lon_new, lat_new;
         // be care of CRS
         try {
             pqxx::work x(*conn);
@@ -116,14 +129,22 @@ public:
             //            " ) AS A"
             //           " ORDER BY ST_Distance(A.g1, A.g2) LIMIT 1;";
             //***********************************************************
+            //CRS different when using ST_Distance!
+            
+//            " SELECT  St_AsText(geom), St_X(St_Transform(geom, 4326)), St_Y(St_Transform(geom, 4326)) FROM"
+//            " (SELECT geom FROM " + nodestable + " ORDER BY ST_Distance(ST_GeomFromText('POINT("+
+//            to_string(lon) + " " + to_string(lat) + ")', 4326) , geom) LIMIT 1 ) AS t;";
+            
             " SELECT  St_AsText(geom), St_X(St_Transform(geom, 4326)), St_Y(St_Transform(geom, 4326)) FROM"
-            " (SELECT geom FROM " + nodestable + " ORDER BY ST_Distance(ST_GeomFromText('POINT("+
-            to_string(lon) + " " + to_string(lat) + ")',4301) , geom) LIMIT 1 ) AS t;";
+            " (SELECT geom FROM " + nodestable + " ORDER BY ST_Distance(ST_Transform(ST_GeomFromText('POINT("+
+            to_string(lon) + " " + to_string(lat) + ")',4326), 4301) , geom) LIMIT 1 ) AS t;";
             
             r = x.exec(query);
             nodecode = r[0][0].c_str();
-            lon_new = atof(r[0][1].c_str());
-            lat_new = atof(r[0][2].c_str());
+//            lon_new = atof(r[0][1].c_str());
+            lon_new = boost::lexical_cast<double>(r[0][1].c_str());
+//            lat_new = atof(r[0][2].c_str());
+            lat_new = boost::lexical_cast<double>(r[0][2].c_str());
             
         }
         catch (std::exception &e){

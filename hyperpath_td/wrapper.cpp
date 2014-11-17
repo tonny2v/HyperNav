@@ -245,7 +245,7 @@ BOOST_PYTHON_MODULE(mygraph)
     pyResEdge.def_readwrite("turn", &ResEdge::turn);
     
     class_<Hyperpath_TD> pyHyperpath_TD("Hyperpath_TD", init<Graph*>());
-    pyHyperpath_TD.def("run", &Hyperpath_TD::wrapper_run);
+    pyHyperpath_TD.def("run", &Hyperpath_TD::run);
     pyHyperpath_TD.def("get_path_rec", &Hyperpath_TD::wrapper_get_path_rec);
     pyHyperpath_TD.def("get_path_rec_vstring",
                        &Hyperpath_TD::wrapper_get_path_rec_vstring);

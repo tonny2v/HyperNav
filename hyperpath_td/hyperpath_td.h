@@ -72,10 +72,8 @@ public:
     
     //	typedef unordered_map <string, unordered_map <int, float> > Profile; // link: time: speed
     // to make it thread-safe, run shouldn't change anything of Graph (no write)
-    void run(const string &_oid, const string &_did, const float* h,
-             int dep_time, const Drmhelper& helper);
     
-    float wrapper_run(const string &_oid, const string &_did,
+    float run(const string &_oid, const string &_did,
                       int dep_time, const Drmhelper &helper, float level = 1.0);
     
     // const after function means the function doesn't change the member variables
