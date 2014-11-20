@@ -171,11 +171,11 @@ TEST(NOEXPRESS, WRONGSP)
     cout << "expected arrival time: "<< alg.run(oid, did, dep_time, helper, level) << endl; // no hyperpath
     
     int cnt = 0;
-//    for (const auto &i : alg.get_hyperpath())
-//    {
-//        cnt++;
-//        cout << cnt<< ": " << i.id << "," << i.p << "," << i.od_flg << ","<< endl;
-//    }
+    for (const auto &i : alg.get_hyperpath())
+    {
+        cnt++;
+        cout << cnt<< ": " << i.id << "," << i.p << "," << i.od_flg << ","<< endl;
+    }
     cout << "\"linkcode\" in (";
     for (const auto &i : alg.get_hyperpath())
     {

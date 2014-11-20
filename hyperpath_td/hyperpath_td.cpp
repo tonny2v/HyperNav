@@ -231,17 +231,18 @@ float Hyperpath_TD::run(const string &_oid, const string &_did,
             float P_a = f_a / (f_i[j_idx] + f_a);
             
             string a_id = g->get_edge(a_idx)->id;
-            
-            if (f_i[j_idx] == 0) {
+        ///////////////////////////////////////////////////
+            if (f_i[j_idx] == 0 && u_i[j_idx] == numeric_limits<float>::infinity()) {
                 u_i[j_idx] = u_i[i_idx] + w_max;
             } else {
                 float tmp = (1 - P_a) * u_i[j_idx] + P_a * (u_i[i_idx] + w_min);
-                if (u_i[j_idx] > tmp)
-                    u_i[j_idx] = tmp;
+//                if (u_i[j_idx] > tmp)   // redundant
+                u_i[j_idx] = tmp;
             }
-//            if (j_idx == 152237)
+            /////////////////////////////////////////////////////////
+//            if (j_idx == 151086)
 //            {
-//                cout << "";
+//                cout <<"";
 //            }
             f_i[j_idx] += f_a;
             po_edges.push_back(g->get_edge(a_idx)); //hyperpath is saved by id index of links
@@ -259,16 +260,17 @@ float Hyperpath_TD::run(const string &_oid, const string &_did,
         throw GraphException::NotAccessible();
     }
     
-    // backward pass
+    // backward pass, decreasing order, can be replaced by backward Depth-First Search
     sort(po_edges.begin(), po_edges.end(), [&](Edge* a, Edge* b)->bool
          {
              //				float w_max = get_weights(a_idx, speeds_max, u_i[i_idx]);
-             //             float w_min_a = get_weights(a->id, u_i[a->from_vertex->idx], Speed_mode::MAX);
+//                          float w_min_a = get_weights(a->id, u_i[a->from_vertex->idx], Speed_mode::MAX);
              //             float w_min_b = get_weights(b->id, u_i[b->from_vertex->idx], Speed_mode::MAX);
              float w_min_a = weights_min[a->idx];
              float w_min_b = weights_min[b->idx];
              return u_i[a->from_vertex->idx] + w_min_a > u_i[b->from_vertex->idx] + w_min_b;
          });
+    
     int cnt = 0;
     for (const auto& po_edge : po_edges) {
         auto a_idx = po_edge->idx;
@@ -277,10 +279,9 @@ float Hyperpath_TD::run(const string &_oid, const string &_did,
         string a_id = g->get_edge(a_idx)->id;
         //        float w_max = get_weights(g->get_edge(a_idx)->id, u_i[i_idx], Speed_mode::MIN);
         //        float w_min = get_weights(g->get_edge(a_idx)->id, u_i[i_idx], Speed_mode::MAX);
-//        cout << ++cnt << a_id << endl;
+        
         float w_max = weights_max[a_idx];
         float w_min = weights_min[a_idx];
-        
         float f_a = w_max == w_min ? LARGENUMBER : 1.0 / (w_max - w_min);
         
         // TODO: I think it's wrong because of f_i was wrongly added before in time-dependent case
