@@ -19,6 +19,9 @@
 #include <boost/python.hpp>
 #include "dijkstra.h"
 #include "drmhelper.hpp"
+#include <fstream>
+#include <set>
+
 using namespace std;
 namespace bp = boost::python;
 
@@ -45,6 +48,7 @@ struct ResEdge
 };
 
 class Hyperpath_TD: public Algorithm {
+    
 private:
     Graph *g;
     float *u_i; // node labels
@@ -64,6 +68,8 @@ private:
     float* weights_min;
     float* weights_max;
     
+
+
 public:
     
     Hyperpath_TD(Graph* const _g);
@@ -94,6 +100,7 @@ public:
     float get_path_weights_sum(const vector<string> &_path,
                                float * _weights_min) const;
     
+    set<string> get_turn_restrictions(const string& csv_path);
 };
 
 #endif /* defined(__MyGraph__hyperpath_TD__) */

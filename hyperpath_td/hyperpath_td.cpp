@@ -452,3 +452,21 @@ float Hyperpath_TD::get_path_weights_sum(const vector<string>& _path,
     }
     return sum;
 }
+
+set<string>  Hyperpath_TD::get_turn_restrictions(const string& csv_path) {
+    fstream myfile(csv_path);
+    set<string> restrictions;
+    if (myfile.is_open())
+    {
+        string line;
+        while ( getline (myfile,line) )
+        {
+            restrictions.insert(line);
+        }
+        myfile.close();
+    }
+    
+    else throw "Unable to open turn restrictions file";
+    
+    return restrictions;
+}

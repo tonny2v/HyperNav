@@ -50,7 +50,7 @@ Dijkstra_rev::~Dijkstra_rev(){
 
 // u is link label, has to be initialized numeric_limits<float>::infinity()) before running,
 // pre_idx stores the idx of shortest path tree for path trace back.
-void Dijkstra_rev::run(string _oid, const float* weights){
+void Dijkstra_rev::run(string _oid, const float* weights,  const unordered_map<string, string>& turn_restrictions){
     auto o_idx = g->get_vidx(_oid);
     
     //initialization

@@ -26,4 +26,6 @@ constexpr auto GRAPH_TOKYO_DRM_BIDIRECTIONAL_CSV_PATH = "/Users/tonny/Downloads/
 
 constexpr auto GRAPH_TOKYO_MATSIM_CSV_PATH = "/Users/tonny/Downloads/Tokyo_matsim.csv";
 
+#define TURN_RESTRICTIONS_CSV_PATH = "./turn_restricions.csv";
+
 #endif
