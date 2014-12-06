@@ -9,7 +9,7 @@
 #include <stdint.h>
 #include "hyperpath_td.h"
 #include "fibheap.h"
-#include "dijkstra.h"
+#include "dijkstra_rev.h"
 #include "heap.h"
 #include "graph.hpp"
 #include <algorithm>
@@ -97,7 +97,9 @@ enum Speed_mode {MAX, MIN};
 float Hyperpath_TD::run(const string &_oid, const string &_did,
                                 int dep_time, const Drmhelper &helper, float level)
 {
-    Dijkstra dij(g);
+    // For generating the heuristics, Dijkstra requires a reverse graph, otherwise it will cause inaccessible problems in some
+    // oneway scenarios.
+    Dijkstra_rev dij(g);
     // nearest node may not in the node set...
     try {
         g->get_vertex(_oid);
@@ -184,7 +186,7 @@ float Hyperpath_TD::run(const string &_oid, const string &_did,
         auto i = g->get_vertex(i_idx);
         auto i_out = i->out_edges;
         
-        for (auto edge : i_out) {
+        for (const auto &edge : i_out) {
             a_idx = edge->idx;
             i_idx = edge->from_vertex->idx;
             j_idx = edge->to_vertex->idx;
@@ -223,6 +225,7 @@ float Hyperpath_TD::run(const string &_oid, const string &_did,
                                 w_min + level * (get_weights(g->get_edge(a_idx)->id, u_i[i_idx], Speed_mode::MIN) - w_min);
         
         weights_max[a_idx] = w_max;
+        
         weights_min[a_idx] = w_min;
         
         if (u_i[j_idx] >= u_i[i_idx] + w_min) {
@@ -295,7 +298,7 @@ float Hyperpath_TD::run(const string &_oid, const string &_did,
     }
     
     for (const auto &po_edge : po_edges) {
-        if (p_a[po_edge->idx] != 0)
+        if (p_a[po_edge->idx] > 0.00000001)
         {
             int odflag = 0;
             if(po_edge->from_vertex->id == _oid) odflag = 1;

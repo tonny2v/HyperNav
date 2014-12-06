@@ -264,7 +264,7 @@ public:
             {
                 string linkcode = row[0].c_str();
                 h5key_map[linkcode] = atoi(row[1].c_str());
-                bool condition = atoi(row[2].c_str()) > length_lowerlimit && atoi(row[7].c_str()) < count_upperlimit;
+                bool condition = atoi(row[7].c_str()) < count_upperlimit && atoi(row[2].c_str()) > length_lowerlimit;
                 length_map[linkcode] =  (condition) ? numeric_limits<float>::infinity(): atof(row[2].c_str());
                 ffspeed_map[linkcode] = atof(row[3].c_str());
                 g->add_edge(linkcode, row[4].c_str(), row[5].c_str());

@@ -35,103 +35,11 @@ using namespace std;
 ////
 
 Drmhelper helper;
-//
-//TEST(NoExpress, SimpleRun) {
-//
-//    auto g = helper.make_graph("noexpress", 182778, 453430);
-//    helper.open_hdf(HDF5, "speeds");
-//    //533945-4380
-//    float o_lon = 139.362125;
-//    float o_lat = 35.7014583333333;
-//
-//    //533946-8893
-//    float d_lon = 139.765475;
-//    float d_lat = 35.6683583333333;
-//
-////    o_lon=139.62;o_lat=35.0;d_lon=139.68;d_lat=35.9;
-//
-//    Drmhelper::Coordinate o = {o_lon, o_lat};
-//    Drmhelper::Coordinate d = {d_lon, d_lat};
-//
-//    cout << "query o id"<<endl;
-//    string oid = helper.get_nearest_nodecode(o, "noexpress_nodes");
-//    cout << "query d id"<<endl;
-//    string did = helper.get_nearest_nodecode(d, "noexpress_nodes");
-//
-//    cout << "oid: "<< oid << endl;
-//    cout << "did: "<< did << endl;
-//
-////        auto g = helper.make_subgraph(o, d, "basic_roadtype < 10", 5000);
-////     int m = int(g->get_edge_number());
-//    Hyperpath_TD alg(g.get());
-//
-//    // TODO: need to be revised since the node number is not pre-determined
-//    cout << g->get_vertex_number()<<endl;
-//    cout << g->get_edge_number()<<endl;
-//
-//
-//    cout << "expected arrival time: "<< alg.wrapper_run(oid, did, 27000, helper, 0.0); // no hyperpath
-//
-//
-//    int cnt = 0;
-//    for (const auto &i : alg.get_hyperpath())
-//    {
-//        cnt ++;
-//        cout << cnt<< ": " << i.id << "," << i.p << "," << i.od_flg << ","<< i.len << endl;
-//    }
-//    helper.close_hdf();
-//};
-//
-//TEST(NoExpress, LengthCountLimits) {
-//
-//    auto g = helper.make_graph2("noexpress", 182778, 453430, 30, 10);
-//    helper.open_hdf(HDF5, "speeds");
-//    //533945-4380
-//    float o_lon = 139.362125;
-//    float o_lat = 35.7014583333333;
-//
-//    //533946-8893
-//    float d_lon = 139.765475;
-//    float d_lat = 35.6683583333333;
-//
-//    //    o_lon=139.62;o_lat=35.0;d_lon=139.68;d_lat=35.9;
-//
-//    Drmhelper::Coordinate o = {o_lon, o_lat};
-//    Drmhelper::Coordinate d = {d_lon, d_lat};
-//
-//    cout << "query o id"<<endl;
-//    string oid = helper.get_nearest_nodecode(o, "noexpress_nodes");
-//    cout << "query d id"<<endl;
-//    string did = helper.get_nearest_nodecode(d, "noexpress_nodes");
-//
-//    cout << "oid: "<< oid << endl;
-//    cout << "did: "<< did << endl;
-//
-//    //        auto g = helper.make_subgraph(o, d, "basic_roadtype < 10", 5000);
-//    //     int m = int(g->get_edge_number());
-//    Hyperpath_TD alg(g.get());
-//
-//    // TODO: need to be revised since the node number is not pre-determined
-//    cout << g->get_vertex_number()<<endl;
-//    cout << g->get_edge_number()<<endl;
-//
-//
-//    cout << "expected arrival time: "<< alg.wrapper_run(oid, did, 27000, helper, 0.0); // no hyperpath
-//
-//
-//    int cnt = 0;
-//    for (const auto &i : alg.get_hyperpath())
-//    {
-//        cnt ++;
-//        cout << cnt<< ": " << i.id << "," << i.p << "," << i.od_flg << ","<< i.len << endl;
-//    }
-//    helper.close_hdf();
-//};
-//
+//auto g = helper.make_graph2("noexpress", 182778, 453430);
+auto g = helper.make_graph2("noexpress", 182778, 453430, 30, 20);
+
 TEST(NOEXPRESS, WRONGSP)
 {
-//    auto g = helper.make_graph2("noexpress", 182778, 453430, 30, 20);
-    auto g = helper.make_graph2("noexpress", 182778, 453430);
     
     // add try clause here
     try {
@@ -141,6 +49,7 @@ TEST(NOEXPRESS, WRONGSP)
         return;
     }
    
+    // wrong probability hyperpath
 //   http://localhost:5000/tdhp?o_lon=139.67782&o_lat=35.610134&d_lon=139.464216&d_lat=35.504513&level=1&t=0
     double o_lon=139.67782;
     double o_lat=35.610134;
@@ -148,6 +57,52 @@ TEST(NOEXPRESS, WRONGSP)
     double d_lat=35.504513;
     int dep_time = 0;
     float level = 1.0;
+    
+    // wrong SP probability
+//http://localhost:5000/tdhp?o_lon=139.612529&o_lat=35.607209&d_lon=139.606435&d_lat=35.602664&level=1&graph=large&t=72900
+    o_lon = 139.612529;
+    o_lat = 35.607209;
+    d_lon = 139.606435;
+    d_lat = 35.602664;
+    dep_time = 72900;
+    level = 1.0;
+
+    // inaccessible
+///tdhp?o_lat=35.733913505513414&o_lon=139.73967622965574&d_lat=35.68646824354568&d_lon=139.78210039436817&t=0&graph=large&hdf=5-95&level=1
+//    o_lon = 139.73967622965574;
+//    o_lat = 35.733913505513414;
+//    d_lon = 139.78210039436817;
+//    d_lat = 35.68646824354568;
+//    dep_time = 0;
+//    level = 1.0;
+    
+    // inaccessible
+//    /tdhp?o_lat=35.733913505513414&o_lon=139.73967622965574&d_lat=35.68646824354568&d_lon=139.78210039436817&t=0&graph=large&hdf=5-95&level=1
+//    o_lon = 139.73967622965574;
+//    o_lat = 35.733913505513414;
+//    d_lon = 139.78210039436817;
+//    d_lat = 35.68646824354568;
+//    dep_time = 0;
+//    level = 1.0;
+    
+    // 0 possibility (solved)
+//    /tdhp?o_lon=139.677873&o_lat=35.610130&d_lon=139.691131&d_lat=35.626566&level=1&hdf=5-95&graph=large&t=0
+//    o_lon = 139.677873;
+//    o_lat = 35.610130;
+//    d_lon = 139.691131;
+//    d_lat = 35.626566;
+//    dep_time = 0;
+//    level = 1.0;
+    
+    // inaccessible (solved)
+//     http://ec2-54-178-123-176.ap-northeast-1.compute.amazonaws.com/tdhp?o_lat=35.610139&o_lon=139.677887&d_lat=35.627116&d_lon=139.626418&t=0&graph=large&hdf=5-95&level=1
+    
+//    o_lon = 139.677887;
+//    o_lat = 35.610139;
+//    d_lon = 139.626418;
+//    d_lat = 35.627116;
+//    dep_time = 0;
+//    level = 1.0;
     
     Drmhelper::Coordinate o = {o_lon, o_lat};
     Drmhelper::Coordinate d = {d_lon, d_lat};
