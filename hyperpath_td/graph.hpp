@@ -221,9 +221,13 @@ public:
     }
     
     inline Edge* get_edge(Vertex* _fv, Vertex* _tv) const{
-        string fid = _fv->id;
-        string tid = _tv->id;
-        return get_edge(fid, tid);
+        for (const auto& e1 : _fv->out_edges)
+        {
+            for (const auto& e2: _tv->in_edges){
+                if (e1->id == e2->id) return get_edge(e1->id);
+            }
+        }
+        return nullptr;
     }
     
     inline Edge* get_edge(string _fid, string _tid) const{

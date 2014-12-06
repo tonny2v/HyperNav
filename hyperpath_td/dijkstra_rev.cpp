@@ -50,7 +50,7 @@ Dijkstra_rev::~Dijkstra_rev(){
 
 // u is link label, has to be initialized numeric_limits<float>::infinity()) before running,
 // pre_idx stores the idx of shortest path tree for path trace back.
-void Dijkstra_rev::run(string _oid, const float* weights,  const unordered_map<string, string>& turn_restrictions){
+void Dijkstra_rev::run(string _oid, const float* weights,  const set<string>& turn_restrictions){
     auto o_idx = g->get_vidx(_oid);
     
     //initialization
@@ -59,18 +59,33 @@ void Dijkstra_rev::run(string _oid, const float* weights,  const unordered_map<s
     
     int vis_idx = 0;
     
+    // previous visited node
+    Vertex* vis_pre = nullptr;
     
     while (heap->nItems() > 0)
     {
         vis_idx = heap->deleteMin();
         auto vis = g->get_vertex(vis_idx);
+        
+        Edge* e_pre = nullptr;
+        
+        //previous edge, note that it's reverse search here, so the first parameter is actually to node
+        if (vis_pre != nullptr){
+            e_pre = g->get_edge(vis, vis_pre);
+        }
         close[vis_idx] = true;
         open[vis_idx] = false;
-//        auto vis_out = vis->out_edges;
         auto vis_in = vis->in_edges;
         for (const auto &e : vis_in)
         {
-//            auto v = e->to_vertex;
+//            string turn = "";
+//            if (vis_pre != nullptr){
+//                turn = e->id + "," + e_pre->id;
+//            }
+//            if (turn_restrictions.size()!=0 && turn != ""){
+//            // if a turn is found in restriction table, skip updating the link
+//            if (turn_restrictions.find(turn) != turn_restrictions.end()) continue;
+//            }
             auto v = e->from_vertex;
             float dist = 0.0;
             if (!close[v->idx])
@@ -93,6 +108,7 @@ void Dijkstra_rev::run(string _oid, const float* weights,  const unordered_map<s
                 }
             }
         }
+        vis_pre = vis;
     }
 }
 

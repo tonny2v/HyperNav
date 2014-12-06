@@ -8,7 +8,7 @@
 #include "radixheap.h"
 #include <boost/python/numeric.hpp>
 #include "drmhelper.hpp"
-#include <unordered_map>
+#include <set>
 namespace bp = boost::python;
 class Dijkstra_rev :
 public Algorithm
@@ -35,7 +35,7 @@ public:
     ~Dijkstra_rev();
     
     // to make it thread-safe, run shouldn't change anything of Graph (no write)
-    void run(string _oid, const float* _weights, const unordered_map<string, string>& turn_restrictions = unordered_map<string, string>());
+    void run(string _oid, const float* _weights, const set<string>& turn_restrictions = set<string>());
     
     // void wrapper_run(string _oid, const bp::object &_weights);
     void wrapper_run(string _oid, const Drmhelper& helper);

@@ -60,6 +60,7 @@
 /* Begin PBXFileReference section */
 		E1A8A3931A25DE0100B50CD3 /* dijkstra_rev.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dijkstra_rev.cpp; sourceTree = "<group>"; };
 		E1A8A3941A25DE0100B50CD3 /* dijkstra_rev.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dijkstra_rev.h; sourceTree = "<group>"; };
+		E1CFAF6A1A338757005A446B /* turn_restrictions.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = turn_restrictions.csv; path = hyperpath_td/turn_restrictions.csv; sourceTree = "<group>"; };
 		E1DB12F419F3E63400D0BED8 /* gtest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtest.framework; path = lib/gtest.framework; sourceTree = "<group>"; };
 		E1DB12F519F3E63400D0BED8 /* libgtest_main.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgtest_main.a; path = lib/libgtest_main.a; sourceTree = "<group>"; };
 		E1DB12F619F3E63400D0BED8 /* libgtest.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgtest.a; path = lib/libgtest.a; sourceTree = "<group>"; };
@@ -119,6 +120,7 @@
 		E1E35A7619D476C4002C1564 = {
 			isa = PBXGroup;
 			children = (
+				E1CFAF6A1A338757005A446B /* turn_restrictions.csv */,
 				E1DB12F419F3E63400D0BED8 /* gtest.framework */,
 				E1DB12F519F3E63400D0BED8 /* libgtest_main.a */,
 				E1DB12F619F3E63400D0BED8 /* libgtest.a */,
