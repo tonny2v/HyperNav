@@ -17,7 +17,6 @@
 #include <unordered_map>
 #include "fibheap.h"
 #include <boost/python.hpp>
-#include "dijkstra.h"
 #include "drmhelper.hpp"
 #include <fstream>
 #include <set>

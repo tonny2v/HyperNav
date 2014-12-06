@@ -8,6 +8,7 @@
 #include "drmhelper.hpp"
 #include "PREDEFINE.h"
 #include "dijkstra.h"
+#include "dijkstra_rev.h"
 #include <gtest/gtest.h>
 
 using namespace std;
