@@ -66,7 +66,7 @@ void Dijkstra::run(string _oid, const float* weights){
         close[vis_idx] = true;
         open[vis_idx] = false;
         auto vis_out = vis->out_edges;
-        for (auto e : vis_out)
+        for (const auto &e : vis_out)
         {
             auto v = e->to_vertex;
             float dist = 0.0;
@@ -121,7 +121,7 @@ void Dijkstra::wrapper_run(string _oid, const Drmhelper& helper){
         close[vis_idx] = true;
         open[vis_idx] = false;
         auto vis_out = vis->out_edges;
-        for (auto e : vis_out)
+        for (const auto &e : vis_out)
         {
             auto v = e->to_vertex;
             float dist = 0.0;

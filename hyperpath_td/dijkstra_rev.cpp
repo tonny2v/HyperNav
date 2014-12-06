@@ -59,6 +59,7 @@ void Dijkstra_rev::run(string _oid, const float* weights){
     
     int vis_idx = 0;
     
+    
     while (heap->nItems() > 0)
     {
         vis_idx = heap->deleteMin();
@@ -67,7 +68,7 @@ void Dijkstra_rev::run(string _oid, const float* weights){
         open[vis_idx] = false;
 //        auto vis_out = vis->out_edges;
         auto vis_in = vis->in_edges;
-        for (auto e : vis_in)
+        for (const auto &e : vis_in)
         {
 //            auto v = e->to_vertex;
             auto v = e->from_vertex;
@@ -123,7 +124,7 @@ void Dijkstra_rev::wrapper_run(string _oid, const Drmhelper& helper){
         close[vis_idx] = true;
         open[vis_idx] = false;
         auto vis_in = vis->in_edges;
-        for (auto e : vis_in)
+        for (const auto &e : vis_in)
         {
             auto v = e->from_vertex;
             float dist = 0.0;

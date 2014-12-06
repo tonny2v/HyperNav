@@ -168,6 +168,9 @@ float Hyperpath_TD::run(const string &_oid, const string &_did,
         return fifo_time;
     };
     
+    // read turn prohibition table
+    
+    
     auto o_idx = g->get_vidx(_oid);
     auto d_idx = g->get_vidx(_did);
     //initialization
@@ -186,6 +189,7 @@ float Hyperpath_TD::run(const string &_oid, const string &_did,
         auto i = g->get_vertex(i_idx);
         auto i_out = i->out_edges;
         
+        // check contraints here
         for (const auto &edge : i_out) {
             a_idx = edge->idx;
             i_idx = edge->from_vertex->idx;
@@ -242,11 +246,6 @@ float Hyperpath_TD::run(const string &_oid, const string &_did,
 //                if (u_i[j_idx] > tmp)   // redundant
                 u_i[j_idx] = tmp;
             }
-            /////////////////////////////////////////////////////////
-//            if (j_idx == 151086)
-//            {
-//                cout <<"";
-//            }
             f_i[j_idx] += f_a;
             po_edges.push_back(g->get_edge(a_idx)); //hyperpath is saved by id index of links
             
@@ -289,10 +288,6 @@ float Hyperpath_TD::run(const string &_oid, const string &_did,
         
         // TODO: I think it's wrong because of f_i was wrongly added before in time-dependent case
         float P_a = f_a / f_i[j_idx];
-//        if (a_id == "533914-29111065")
-//        {
-//            cout << j_idx;
-//        }
         p_a[a_idx] = P_a * p_i[j_idx];
         p_i[i_idx] += p_a[a_idx];
     }
