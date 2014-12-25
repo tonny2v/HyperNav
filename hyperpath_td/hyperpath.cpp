@@ -89,7 +89,7 @@ void Hyperpath::run(string _oid, string _did, const float* weights_min,
     // backward pass
     while (true) {
         auto j = g->get_vertex(j_idx);
-        for (auto edge : j->in_edges) {
+        for (const auto &edge : j->in_edges) {
             a_idx = edge->idx;
             cout << "id" << edge->to_vertex->id << endl;
             i_idx = edge->from_vertex->idx;
@@ -155,7 +155,7 @@ void Hyperpath::run(string _oid, string _did, const float* weights_min,
              return u_i[a->to_vertex->idx] + weights_min[a->idx] > u_i[b->to_vertex->idx] + weights_min[b->idx];
          });
     
-    for (auto po_edge : po_edges) {
+    for (const auto &po_edge : po_edges) {
         auto a_idx = po_edge->idx;
         auto i_idx = po_edge->from_vertex->idx;
         auto j_idx = po_edge->to_vertex->idx;
@@ -167,7 +167,7 @@ void Hyperpath::run(string _oid, string _did, const float* weights_min,
         p_i[j_idx] += p_a[a_idx];
     }
     
-    for (auto po_edge : po_edges) {
+    for (const auto &po_edge : po_edges) {
         if (p_a[po_edge->idx] != 0)
             hyperpath.push_back(make_pair(po_edge->id, p_a[po_edge->idx]));
     }
@@ -259,7 +259,7 @@ void Hyperpath::wrapper_run(string _oid, const string _did,
              return u_i[a->to_vertex->idx] + weights_min[a->idx] > u_i[b->to_vertex->idx] + weights_min[b->idx];
          });
     
-    for (auto po_edge : po_edges) {
+    for (const auto &po_edge : po_edges) {
         auto a_idx = po_edge->idx;
         auto i_idx = po_edge->from_vertex->idx;
         auto j_idx = po_edge->to_vertex->idx;
@@ -271,7 +271,7 @@ void Hyperpath::wrapper_run(string _oid, const string _did,
         p_i[j_idx] += p_a[a_idx];
     }
     
-    for (auto po_edge : po_edges) {
+    for (const auto &po_edge : po_edges) {
         if (p_a[po_edge->idx] != 0)
             hyperpath.push_back(make_pair(po_edge->id, p_a[po_edge->idx]));
     }

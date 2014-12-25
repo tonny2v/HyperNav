@@ -4,19 +4,44 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>hyperpath_td copy.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
-		</dict>
-		<key>hyperpath_td.xcscheme</key>
+		<key>gtests.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>library.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>main.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>E181C4921A4C159B00999527</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E181C4AE1A4C192600999527</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E181C4B91A4C194300999527</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E181C4C11A4C197B00999527</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>E1E35A7E19D476C4002C1564</key>
 		<dict>
 			<key>primary</key>

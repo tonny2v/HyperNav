@@ -7,13 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E181C48E1A4C149600999527 /* dijkstra_rev.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1A8A3931A25DE0100B50CD3 /* dijkstra_rev.cpp */; };
+		E181C4C41A4C197B00999527 /* dijkstra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8C19D476F7002C1564 /* dijkstra.cpp */; };
+		E181C4C61A4C197B00999527 /* hyperpath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9A19D476F7002C1564 /* hyperpath.cpp */; };
+		E181C4C71A4C197B00999527 /* radixheap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9D19D476F7002C1564 /* radixheap.cpp */; };
+		E181C4C81A4C197B00999527 /* algorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8919D476F7002C1564 /* algorithm.cpp */; };
+		E181C4C91A4C197B00999527 /* fibheap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8E19D476F7002C1564 /* fibheap.cpp */; };
+		E181C4D71A4C19E200999527 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E181C4951A4C159B00999527 /* main.cpp */; };
+		E181C4D81A4C1B8100999527 /* hyperpath_td.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9819D476F7002C1564 /* hyperpath_td.cpp */; };
+		E181C4D91A4C1BE500999527 /* dijkstra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8C19D476F7002C1564 /* dijkstra.cpp */; };
+		E181C4DA1A4C1BF000999527 /* hyperpath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9A19D476F7002C1564 /* hyperpath.cpp */; };
 		E1A8A3951A25DE0100B50CD3 /* dijkstra_rev.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1A8A3931A25DE0100B50CD3 /* dijkstra_rev.cpp */; };
 		E1DB12F719F3E63400D0BED8 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DB12F419F3E63400D0BED8 /* gtest.framework */; };
 		E1DB12F819F3E63400D0BED8 /* libgtest_main.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DB12F519F3E63400D0BED8 /* libgtest_main.a */; };
 		E1DB12F919F3E63400D0BED8 /* libgtest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DB12F619F3E63400D0BED8 /* libgtest.a */; };
-		E1DB12FA19F404C200D0BED8 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DB12F419F3E63400D0BED8 /* gtest.framework */; };
-		E1DB12FB19F404C200D0BED8 /* libgtest_main.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DB12F519F3E63400D0BED8 /* libgtest_main.a */; };
-		E1DB12FC19F404C200D0BED8 /* libgtest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DB12F619F3E63400D0BED8 /* libgtest.a */; };
 		E1E35A8319D476C4002C1564 /* unittests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8219D476C4002C1564 /* unittests.cpp */; };
 		E1E35AA119D476F7002C1564 /* algorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8919D476F7002C1564 /* algorithm.cpp */; };
 		E1E35AA219D476F7002C1564 /* dijkstra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8C19D476F7002C1564 /* dijkstra.cpp */; };
@@ -24,19 +31,22 @@
 		E1E35AA719D476F7002C1564 /* hyperpath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9A19D476F7002C1564 /* hyperpath.cpp */; };
 		E1E35AA819D476F7002C1564 /* radixheap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9D19D476F7002C1564 /* radixheap.cpp */; };
 		E1E35AA919D476F7002C1564 /* wrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35AA019D476F7002C1564 /* wrapper.cpp */; };
-		E1E35AB419D57BA5002C1564 /* unittests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8219D476C4002C1564 /* unittests.cpp */; };
-		E1E35AB519D57BA5002C1564 /* dijkstra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8C19D476F7002C1564 /* dijkstra.cpp */; };
-		E1E35AB619D57BA5002C1564 /* hyperpath_sl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9619D476F7002C1564 /* hyperpath_sl.cpp */; };
-		E1E35AB719D57BA5002C1564 /* hyperpath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9A19D476F7002C1564 /* hyperpath.cpp */; };
 		E1E35AB819D57BA5002C1564 /* radixheap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9D19D476F7002C1564 /* radixheap.cpp */; };
 		E1E35AB919D57BA5002C1564 /* algorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8919D476F7002C1564 /* algorithm.cpp */; };
 		E1E35ABA19D57BA5002C1564 /* fibheap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8E19D476F7002C1564 /* fibheap.cpp */; };
-		E1E35ABB19D57BA5002C1564 /* hyperpath_gev.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9419D476F7002C1564 /* hyperpath_gev.cpp */; };
-		E1E35ABC19D57BA5002C1564 /* hyperpath_td.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9819D476F7002C1564 /* hyperpath_td.cpp */; };
 		E1E35ABD19D57BA5002C1564 /* wrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35AA019D476F7002C1564 /* wrapper.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		E181C4D21A4C197B00999527 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		E1E35A7D19D476C4002C1564 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -58,6 +68,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E181C4951A4C159B00999527 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		E181C4D61A4C197B00999527 /* main */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = main; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1A8A3931A25DE0100B50CD3 /* dijkstra_rev.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dijkstra_rev.cpp; sourceTree = "<group>"; };
 		E1A8A3941A25DE0100B50CD3 /* dijkstra_rev.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dijkstra_rev.h; sourceTree = "<group>"; };
 		E1CFAF6A1A338757005A446B /* turn_restrictions.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = turn_restrictions.csv; path = hyperpath_td/turn_restrictions.csv; sourceTree = "<group>"; };
@@ -94,6 +106,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E181C4CE1A4C197B00999527 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E1E35A7C19D476C4002C1564 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -108,15 +127,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1DB12FA19F404C200D0BED8 /* gtest.framework in Frameworks */,
-				E1DB12FB19F404C200D0BED8 /* libgtest_main.a in Frameworks */,
-				E1DB12FC19F404C200D0BED8 /* libgtest.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E181C4941A4C159B00999527 /* main */ = {
+			isa = PBXGroup;
+			children = (
+				E181C4951A4C159B00999527 /* main.cpp */,
+			);
+			path = main;
+			sourceTree = "<group>";
+		};
 		E1E35A7619D476C4002C1564 = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +149,7 @@
 				E1DB12F519F3E63400D0BED8 /* libgtest_main.a */,
 				E1DB12F619F3E63400D0BED8 /* libgtest.a */,
 				E1E35A8119D476C4002C1564 /* hyperpath_td */,
+				E181C4941A4C159B00999527 /* main */,
 				E1E35A8019D476C4002C1564 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -134,6 +159,7 @@
 			children = (
 				E1E35A7F19D476C4002C1564 /* hyperpath_td */,
 				E1E35AC319D57BA5002C1564 /* mygraph.so */,
+				E181C4D61A4C197B00999527 /* main */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -175,6 +201,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		E181C4C11A4C197B00999527 /* main */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E181C4D31A4C197B00999527 /* Build configuration list for PBXNativeTarget "main" */;
+			buildPhases = (
+				E181C4C21A4C197B00999527 /* Sources */,
+				E181C4CE1A4C197B00999527 /* Frameworks */,
+				E181C4D21A4C197B00999527 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = main;
+			productName = hyperpath_td;
+			productReference = E181C4D61A4C197B00999527 /* main */;
+			productType = "com.apple.product-type.tool";
+		};
 		E1E35A7E19D476C4002C1564 /* hyperpath_td */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E1E35A8619D476C4002C1564 /* Build configuration list for PBXNativeTarget "hyperpath_td" */;
@@ -237,11 +280,25 @@
 			targets = (
 				E1E35A7E19D476C4002C1564 /* hyperpath_td */,
 				E1E35AB219D57BA5002C1564 /* libmygraph */,
+				E181C4C11A4C197B00999527 /* main */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E181C4C21A4C197B00999527 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E181C4D71A4C19E200999527 /* main.cpp in Sources */,
+				E181C4C41A4C197B00999527 /* dijkstra.cpp in Sources */,
+				E181C4C61A4C197B00999527 /* hyperpath.cpp in Sources */,
+				E181C4C71A4C197B00999527 /* radixheap.cpp in Sources */,
+				E181C4C81A4C197B00999527 /* algorithm.cpp in Sources */,
+				E181C4C91A4C197B00999527 /* fibheap.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E1E35A7B19D476C4002C1564 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -264,15 +321,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1E35AB419D57BA5002C1564 /* unittests.cpp in Sources */,
-				E1E35AB519D57BA5002C1564 /* dijkstra.cpp in Sources */,
-				E1E35AB619D57BA5002C1564 /* hyperpath_sl.cpp in Sources */,
-				E1E35AB719D57BA5002C1564 /* hyperpath.cpp in Sources */,
+				E181C4DA1A4C1BF000999527 /* hyperpath.cpp in Sources */,
+				E181C4D91A4C1BE500999527 /* dijkstra.cpp in Sources */,
+				E181C4D81A4C1B8100999527 /* hyperpath_td.cpp in Sources */,
+				E181C48E1A4C149600999527 /* dijkstra_rev.cpp in Sources */,
 				E1E35AB819D57BA5002C1564 /* radixheap.cpp in Sources */,
 				E1E35AB919D57BA5002C1564 /* algorithm.cpp in Sources */,
 				E1E35ABA19D57BA5002C1564 /* fibheap.cpp in Sources */,
-				E1E35ABB19D57BA5002C1564 /* hyperpath_gev.cpp in Sources */,
-				E1E35ABC19D57BA5002C1564 /* hyperpath_td.cpp in Sources */,
 				E1E35ABD19D57BA5002C1564 /* wrapper.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,6 +335,74 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		E181C4D41A4C197B00999527 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/hyperpath_td",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/lib",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/opt/local/include,
+					/opt/local/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7,
+				);
+				LD_DYLIB_INSTALL_NAME = "";
+				LIBRARY_SEARCH_PATHS = (
+					/opt/local/lib,
+					"$(PROJECT_DIR)/hyperpath_td",
+					"$(PROJECT_DIR)/lib",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks/gtest.framework/Versions/A/Resources",
+				);
+				MACH_O_TYPE = mh_execute;
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LDFLAGS = (
+					"-lpqxx",
+					"-lboost_python-mt",
+					"-lpython2.7",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E181C4D51A4C197B00999527 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/hyperpath_td",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/lib",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/opt/local/include,
+					/opt/local/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7,
+				);
+				LD_DYLIB_INSTALL_NAME = "";
+				LIBRARY_SEARCH_PATHS = (
+					/opt/local/lib,
+					"$(PROJECT_DIR)/hyperpath_td",
+					"$(PROJECT_DIR)/lib",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks/gtest.framework/Versions/A/Resources",
+				);
+				MACH_O_TYPE = mh_execute;
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LDFLAGS = (
+					"-lpqxx",
+					"-lboost_python-mt",
+					"-lpython2.7",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		E1E35A8419D476C4002C1564 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -384,11 +507,7 @@
 					"-lhdf5",
 					"-lpqxx",
 					"-lboost_python-mt",
-					"-lboost_thread-mt",
-					"-lboost_system-mt",
 					"-lpython2.7",
-					"-lboost_unit_test_framework-mt",
-					"-lpthread",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -424,11 +543,7 @@
 					"-lhdf5",
 					"-lpqxx",
 					"-lboost_python-mt",
-					"-lboost_thread-mt",
-					"-lboost_system-mt",
 					"-lpython2.7",
-					"-lboost_unit_test_framework-mt",
-					"-lpthread",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -459,9 +574,6 @@
 					"-lhdf5",
 					"-lpqxx",
 					"-lboost_python-mt",
-					"-lboost_thread-mt",
-					"-lboost_system-mt",
-					"-lboost_unit_test_framework-mt",
 					"-lpython2.7",
 				);
 				PRODUCT_NAME = mygraph.so;
@@ -493,9 +605,6 @@
 					"-lhdf5",
 					"-lpqxx",
 					"-lboost_python-mt",
-					"-lboost_thread-mt",
-					"-lboost_system-mt",
-					"-lboost_unit_test_framework-mt",
 					"-lpython2.7",
 				);
 				PRODUCT_NAME = mygraph.so;
@@ -505,6 +614,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E181C4D31A4C197B00999527 /* Build configuration list for PBXNativeTarget "main" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E181C4D41A4C197B00999527 /* Debug */,
+				E181C4D51A4C197B00999527 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E1E35A7A19D476C4002C1564 /* Build configuration list for PBXProject "hyperpath_td" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
