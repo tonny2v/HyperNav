@@ -99,7 +99,7 @@ public:
     float get_path_weights_sum(const vector<string> &_path,
                                float * _weights_min) const;
     
-    set<string> get_turn_restrictions(const string& csv_path);
+    set<string>* get_turn_restrictions(const string& csv_path);
 };
 
 #endif /* defined(__MyGraph__hyperpath_TD__) */

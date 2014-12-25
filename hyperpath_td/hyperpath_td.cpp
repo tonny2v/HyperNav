@@ -20,6 +20,8 @@
 #include "PREDEFINE.h"
 #include "drmhelper.hpp"
 #include <math.h>
+#include <queue>
+
 #define LARGENUMBER 9999999999999
 
 Hyperpath_TD::Hyperpath_TD(Graph* const _g) {
@@ -53,7 +55,6 @@ Hyperpath_TD::Hyperpath_TD(Graph* const _g) {
         open[i] = false;
         close[i] = false;
     }
-    
 }
 
 Hyperpath_TD::~Hyperpath_TD() {
@@ -93,22 +94,41 @@ Hyperpath_TD::~Hyperpath_TD() {
 enum Speed_mode {MAX, MIN};
 
 
+set<string>*  Hyperpath_TD::get_turn_restrictions(const string& csv_path) {
+    fstream myfile(csv_path);
+    set<string> *restrictions = new set<string>();
+    if (myfile.is_open())
+    {
+        string line;
+        while ( getline (myfile,line) )
+        {
+            restrictions->insert(line);
+        }
+        myfile.close();
+    }
+    else throw "Unable to open turn restrictions file";
+    return restrictions;
+}
 
 float Hyperpath_TD::run(const string &_oid, const string &_did,
                                 int dep_time, const Drmhelper &helper, float level)
 {
+    // this is reloaded in every query so that the turn table can be set any time
+    const auto restrictions = get_turn_restrictions(TURN_RESTRICTIONS_CSV_PATH);
+    
     // For generating the heuristics, Dijkstra requires a reverse graph, otherwise it will cause inaccessible problems in some
     // oneway scenarios.
     Dijkstra_rev dij(g);
     // nearest node may not in the node set...
-    try {
-        g->get_vertex(_oid);
-        g->get_vertex(_did);
-    }
-    catch (std::exception &e)
-    {
-        std::cerr << "Origin or destination ID error: " << e.what() << endl;
-    }
+    // try ... catch not needed, let it throw
+//    try {
+    g->get_vertex(_oid);
+    g->get_vertex(_did);
+//    }
+//    catch (std::exception &e)
+//    {
+//        std::cerr << "Origin or destination ID error: " << e.what() << endl;
+//    }
     
     
     int m = int(g->get_edge_number());
@@ -183,20 +203,34 @@ float Hyperpath_TD::run(const string &_oid, const string &_did,
     int i_idx = o_idx;
     int j_idx = 0;
     int a_idx = 0;
-    
+   
+    int a_idx_pre = -1;
     // forward pass
     while (true) {
         auto i = g->get_vertex(i_idx);
         auto i_out = i->out_edges;
         
-        // check contraints here
         for (const auto &edge : i_out) {
             a_idx = edge->idx;
             i_idx = edge->from_vertex->idx;
             j_idx = edge->to_vertex->idx;
+            // check constraints here
+            string turn = "";
+            if (a_idx_pre != -1){
+                turn = g->get_edge(a_idx_pre)->id + "," + g->get_edge(a_idx)->id;
+            }
+            
             
             float temp = u_i[i_idx] + get_weights(g->get_edge(a_idx)->id, u_i[i_idx], Speed_mode::MAX)
             + h[j_idx];
+           
+            if (restrictions->size()!=0 && turn != ""){
+                // if a turn is found in restriction table, skip updating the link
+                cout << turn << endl;
+                if (restrictions->find(turn) != restrictions->end()){
+                    temp += 99999999;
+                }
+            }
             
             if (u_a[a_idx] > temp) {
                 u_a[a_idx] = temp;
@@ -216,6 +250,7 @@ float Hyperpath_TD::run(const string &_oid, const string &_did,
             break;
         } else {
             a_idx = heap->deleteMin();
+            a_idx_pre = a_idx;
         }
         open[a_idx] = false;
         close[a_idx] = true;
@@ -238,7 +273,7 @@ float Hyperpath_TD::run(const string &_oid, const string &_did,
             float P_a = f_a / (f_i[j_idx] + f_a);
             
             string a_id = g->get_edge(a_idx)->id;
-        ///////////////////////////////////////////////////
+            
             if (f_i[j_idx] == 0 && u_i[j_idx] == numeric_limits<float>::infinity()) {
                 u_i[j_idx] = u_i[i_idx] + w_max;
             } else {
@@ -254,7 +289,6 @@ float Hyperpath_TD::run(const string &_oid, const string &_did,
         if (u_i[i_idx] + w_min  > u_i[d_idx])
             break;
         i_idx = j_idx;
-        
     }
     
     if (u_i[d_idx] == numeric_limits<float>::infinity())
@@ -262,7 +296,9 @@ float Hyperpath_TD::run(const string &_oid, const string &_did,
         throw GraphException::NotAccessible();
     }
     
-    // backward pass, decreasing order, can be replaced by backward Depth-First Search
+   
+    
+    // backward pass, decreasing order, can be replaced by backward Breadth-First Search
     sort(po_edges.begin(), po_edges.end(), [&](Edge* a, Edge* b)->bool
          {
              //				float w_max = get_weights(a_idx, speeds_max, u_i[i_idx]);
@@ -273,7 +309,8 @@ float Hyperpath_TD::run(const string &_oid, const string &_did,
              return u_i[a->from_vertex->idx] + w_min_a > u_i[b->from_vertex->idx] + w_min_b;
          });
     
-    int cnt = 0;
+    
+    
     for (const auto& po_edge : po_edges) {
         auto a_idx = po_edge->idx;
         auto i_idx = po_edge->from_vertex->idx;
@@ -451,22 +488,4 @@ float Hyperpath_TD::get_path_weights_sum(const vector<string>& _path,
         sum += _weights_min[e_idx];
     }
     return sum;
-}
-
-set<string>  Hyperpath_TD::get_turn_restrictions(const string& csv_path) {
-    fstream myfile(csv_path);
-    set<string> restrictions;
-    if (myfile.is_open())
-    {
-        string line;
-        while ( getline (myfile,line) )
-        {
-            restrictions.insert(line);
-        }
-        myfile.close();
-    }
-    
-    else throw "Unable to open turn restrictions file";
-    
-    return restrictions;
 }

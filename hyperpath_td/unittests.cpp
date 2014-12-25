@@ -65,7 +65,8 @@ TEST(NOEXPRESS, WRONGSP)
     o_lat = 35.607209;
     d_lon = 139.606435;
     d_lat = 35.602664;
-    dep_time = 72900;
+//    dep_time = 72900;
+    dep_time = 0;
     level = 1.0;
 
     // inaccessible
