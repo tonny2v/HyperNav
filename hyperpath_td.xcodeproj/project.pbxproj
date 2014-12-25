@@ -20,8 +20,7 @@
 		E181C4DB1A4C6F9300999527 /* graphbuilder.hpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9119D476F7002C1564 /* graphbuilder.hpp */; };
 		E181C4DC1A4C6F9300999527 /* graphhelper.hpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9219D476F7002C1564 /* graphhelper.hpp */; };
 		E181C4DD1A4C6F9300999527 /* drmhelper.hpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9F19D476F7002C1564 /* drmhelper.hpp */; };
-		E181C4DE1A4C6FA200999527 /* hyperpath_td.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9819D476F7002C1564 /* hyperpath_td.cpp */; };
-		E181C4DF1A4C6FB200999527 /* dijkstra_rev.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1A8A3931A25DE0100B50CD3 /* dijkstra_rev.cpp */; };
+		E181C4E11A4C7B8A00999527 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = E181C4E01A4C7B8A00999527 /* README.md */; };
 		E1A8A3951A25DE0100B50CD3 /* dijkstra_rev.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1A8A3931A25DE0100B50CD3 /* dijkstra_rev.cpp */; };
 		E1DB12F719F3E63400D0BED8 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DB12F419F3E63400D0BED8 /* gtest.framework */; };
 		E1DB12F819F3E63400D0BED8 /* libgtest_main.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DB12F519F3E63400D0BED8 /* libgtest_main.a */; };
@@ -75,6 +74,7 @@
 /* Begin PBXFileReference section */
 		E181C4951A4C159B00999527 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		E181C4D61A4C197B00999527 /* main */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = main; sourceTree = BUILT_PRODUCTS_DIR; };
+		E181C4E01A4C7B8A00999527 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E1A8A3931A25DE0100B50CD3 /* dijkstra_rev.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dijkstra_rev.cpp; sourceTree = "<group>"; };
 		E1A8A3941A25DE0100B50CD3 /* dijkstra_rev.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dijkstra_rev.h; sourceTree = "<group>"; };
 		E1DB12F419F3E63400D0BED8 /* gtest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtest.framework; path = lib/gtest.framework; sourceTree = "<group>"; };
@@ -148,10 +148,11 @@
 		E1E35A7619D476C4002C1564 = {
 			isa = PBXGroup;
 			children = (
+				E181C4E01A4C7B8A00999527 /* README.md */,
 				E1DB12F419F3E63400D0BED8 /* gtest.framework */,
 				E1DB12F519F3E63400D0BED8 /* libgtest_main.a */,
 				E1DB12F619F3E63400D0BED8 /* libgtest.a */,
-				E1E35A8119D476C4002C1564 /* hyperpath_td */,
+				E1E35A8119D476C4002C1564 /* src */,
 				E181C4941A4C159B00999527 /* main */,
 				E1E35A8019D476C4002C1564 /* Products */,
 			);
@@ -167,7 +168,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E1E35A8119D476C4002C1564 /* hyperpath_td */ = {
+		E1E35A8119D476C4002C1564 /* src */ = {
 			isa = PBXGroup;
 			children = (
 				E1A8A3931A25DE0100B50CD3 /* dijkstra_rev.cpp */,
@@ -198,6 +199,7 @@
 				E1E35AA019D476F7002C1564 /* wrapper.cpp */,
 				E1E35A8219D476C4002C1564 /* unittests.cpp */,
 			);
+			name = src;
 			path = hyperpath_td;
 			sourceTree = "<group>";
 		};
@@ -293,8 +295,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E181C4DF1A4C6FB200999527 /* dijkstra_rev.cpp in Sources */,
-				E181C4DE1A4C6FA200999527 /* hyperpath_td.cpp in Sources */,
 				E181C4DB1A4C6F9300999527 /* graphbuilder.hpp in Sources */,
 				E181C4DC1A4C6F9300999527 /* graphhelper.hpp in Sources */,
 				E181C4DD1A4C6F9300999527 /* drmhelper.hpp in Sources */,
@@ -317,6 +317,7 @@
 				E1E35AA719D476F7002C1564 /* hyperpath.cpp in Sources */,
 				E1E35AA819D476F7002C1564 /* radixheap.cpp in Sources */,
 				E1E35AA119D476F7002C1564 /* algorithm.cpp in Sources */,
+				E181C4E11A4C7B8A00999527 /* README.md in Sources */,
 				E1E35AA319D476F7002C1564 /* fibheap.cpp in Sources */,
 				E1E35AA419D476F7002C1564 /* hyperpath_gev.cpp in Sources */,
 				E1E35AA619D476F7002C1564 /* hyperpath_td.cpp in Sources */,
@@ -372,8 +373,6 @@
 					"-lpqxx",
 					"-lboost_python-mt",
 					"-lpython2.7",
-					"-lhdf5_hl",
-					"-lhdf5",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -408,8 +407,6 @@
 					"-lpqxx",
 					"-lboost_python-mt",
 					"-lpython2.7",
-					"-lhdf5_hl",
-					"-lhdf5",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
