@@ -17,6 +17,11 @@
 		E181C4D81A4C1B8100999527 /* hyperpath_td.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9819D476F7002C1564 /* hyperpath_td.cpp */; };
 		E181C4D91A4C1BE500999527 /* dijkstra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A8C19D476F7002C1564 /* dijkstra.cpp */; };
 		E181C4DA1A4C1BF000999527 /* hyperpath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9A19D476F7002C1564 /* hyperpath.cpp */; };
+		E181C4DB1A4C6F9300999527 /* graphbuilder.hpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9119D476F7002C1564 /* graphbuilder.hpp */; };
+		E181C4DC1A4C6F9300999527 /* graphhelper.hpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9219D476F7002C1564 /* graphhelper.hpp */; };
+		E181C4DD1A4C6F9300999527 /* drmhelper.hpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9F19D476F7002C1564 /* drmhelper.hpp */; };
+		E181C4DE1A4C6FA200999527 /* hyperpath_td.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1E35A9819D476F7002C1564 /* hyperpath_td.cpp */; };
+		E181C4DF1A4C6FB200999527 /* dijkstra_rev.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1A8A3931A25DE0100B50CD3 /* dijkstra_rev.cpp */; };
 		E1A8A3951A25DE0100B50CD3 /* dijkstra_rev.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1A8A3931A25DE0100B50CD3 /* dijkstra_rev.cpp */; };
 		E1DB12F719F3E63400D0BED8 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DB12F419F3E63400D0BED8 /* gtest.framework */; };
 		E1DB12F819F3E63400D0BED8 /* libgtest_main.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DB12F519F3E63400D0BED8 /* libgtest_main.a */; };
@@ -72,7 +77,6 @@
 		E181C4D61A4C197B00999527 /* main */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = main; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1A8A3931A25DE0100B50CD3 /* dijkstra_rev.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dijkstra_rev.cpp; sourceTree = "<group>"; };
 		E1A8A3941A25DE0100B50CD3 /* dijkstra_rev.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dijkstra_rev.h; sourceTree = "<group>"; };
-		E1CFAF6A1A338757005A446B /* turn_restrictions.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = turn_restrictions.csv; path = hyperpath_td/turn_restrictions.csv; sourceTree = "<group>"; };
 		E1DB12F419F3E63400D0BED8 /* gtest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtest.framework; path = lib/gtest.framework; sourceTree = "<group>"; };
 		E1DB12F519F3E63400D0BED8 /* libgtest_main.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgtest_main.a; path = lib/libgtest_main.a; sourceTree = "<group>"; };
 		E1DB12F619F3E63400D0BED8 /* libgtest.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgtest.a; path = lib/libgtest.a; sourceTree = "<group>"; };
@@ -144,7 +148,6 @@
 		E1E35A7619D476C4002C1564 = {
 			isa = PBXGroup;
 			children = (
-				E1CFAF6A1A338757005A446B /* turn_restrictions.csv */,
 				E1DB12F419F3E63400D0BED8 /* gtest.framework */,
 				E1DB12F519F3E63400D0BED8 /* libgtest_main.a */,
 				E1DB12F619F3E63400D0BED8 /* libgtest.a */,
@@ -290,6 +293,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E181C4DF1A4C6FB200999527 /* dijkstra_rev.cpp in Sources */,
+				E181C4DE1A4C6FA200999527 /* hyperpath_td.cpp in Sources */,
+				E181C4DB1A4C6F9300999527 /* graphbuilder.hpp in Sources */,
+				E181C4DC1A4C6F9300999527 /* graphhelper.hpp in Sources */,
+				E181C4DD1A4C6F9300999527 /* drmhelper.hpp in Sources */,
 				E181C4D71A4C19E200999527 /* main.cpp in Sources */,
 				E181C4C41A4C197B00999527 /* dijkstra.cpp in Sources */,
 				E181C4C61A4C197B00999527 /* hyperpath.cpp in Sources */,
@@ -364,6 +372,8 @@
 					"-lpqxx",
 					"-lboost_python-mt",
 					"-lpython2.7",
+					"-lhdf5_hl",
+					"-lhdf5",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -398,6 +408,8 @@
 					"-lpqxx",
 					"-lboost_python-mt",
 					"-lpython2.7",
+					"-lhdf5_hl",
+					"-lhdf5",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
